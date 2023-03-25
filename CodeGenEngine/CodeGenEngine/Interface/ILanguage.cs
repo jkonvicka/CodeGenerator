@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace CodeGenEngine
+namespace CodeGenEngine.Interface
 {
     interface ILanguage
     {
