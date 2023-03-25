@@ -9,6 +9,14 @@ namespace CodeGenEngine
     public enum Keyword
     {
         CLASS,
-        INCLUDE
+        INCLUDE,
+        GETTERPREFIX,
+        SETTERPREFIX,
+        SELFCLASSPOINTER,
+        ENDOFCOMMAND,
+        OPENBODY,
+        CLOSEBODY,
+        DEFINITIONSTART,
+        PROPERTYTEMPLATE
     }
 }

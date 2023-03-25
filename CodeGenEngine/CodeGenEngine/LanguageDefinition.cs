@@ -8,16 +8,15 @@ namespace CodeGenEngine
 {
     public class LanguageDefinition
     {
-        public class AccessOperator
-        {
-            public string Private { get; set; }
-            public string Public { get; set; }
-            public string Protected { get; set; }
-        }
-
-        public string ClassKeyword { get; set; }
-        public string ReturnKeyword { get; set; }
-        public string NamespaceDefinition { get; set; }
+        public string IncludeTemplate { get; set; } = string.Empty;
+        public string NamespaceTemplate { get; set; } = string.Empty;
+        public string ClassDefinitionWithoutBaseClassTemplate { get; set; } = string.Empty;
+        public string ClassDefinitionWithBaseClassTemplate { get; set; } = string.Empty;
+        public string PropertyDefinititonTemplate { get; set; } = string.Empty;
+        public string PropertyGetterTemplate { get; set; } = string.Empty;
+        public string PropertySetterTemplate { get; set; } = string.Empty;
+        public string OpenDefinitonBodyTemplate { get; set; } = string.Empty;
+        public string CloseDefinitionBodyTemplate { get; set; } = string.Empty;
 
     }
 }

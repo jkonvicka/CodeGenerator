@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace CodeGenEngine
 {
-    public class Class : IElement
+    public class Class : IElement, IMapped
     {
         public string Name { get; set; }
+        public string NameSpace {get; set; }
         public AccessOperator AccessOperator { get; set; }
         public List<Include> Includes {get; set;} = new();
         public List<BaseClass> BaseClasses { get; set;} = new();
@@ -18,6 +19,18 @@ namespace CodeGenEngine
         public void Accept(IVisitor visitor)
         {
             visitor.Visit(this);
+        }
+
+        public Dictionary<string, string> GetMapping()
+        {
+            return new Dictionary<string, string>()
+            {
+                { "NAMESPACE", NameSpace },
+                { "ACCESSOPERATOR", AccessOperator.ToString().ToLower() },
+                { "CLASSNAME", Name },
+                { "<BASECLASES>", string.Join(", ", BaseClasses.Select(x=>x.Name)) },
+
+            };
         }
     }
 }
