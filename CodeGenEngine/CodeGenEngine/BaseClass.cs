@@ -1,4 +1,6 @@
-﻿namespace CodeGenEngine
+﻿using CodeGenEngine.Interface;
+
+namespace CodeGenEngine
 {
     public class BaseClass : IElement
     {

@@ -1,4 +1,4 @@
-﻿namespace CodeGenEngine
+﻿namespace CodeGenEngine.Interface
 {
     public interface IElement
     {
