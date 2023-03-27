@@ -11,8 +11,6 @@ namespace CodeGenEngine
 {
     public class Language : IVisitor, ILanguage
     {
-        public LanguageDeclaration Declaration { get; set; }
-
         private Dictionary<string, string> ClassDeclaration { get; set; } = new Dictionary<string, string>()
         {
             {"INCLUDES_DECLARATION", string.Empty },
@@ -26,6 +24,8 @@ namespace CodeGenEngine
             {"PUBLIC_METHODS_DECLARATION", string.Empty },
         };
 
+        public LanguageDeclaration Declaration { get; set; }
+
         private int TabNum { get; set; } = 0;
 
         static string Tabs(int n)
@@ -38,6 +38,8 @@ namespace CodeGenEngine
             Declaration = declaration;
         }
 
+        #region Public Methods
+
         public string GetCode(Class @class)
         {
             @class.Accept(this);
@@ -49,98 +51,7 @@ namespace CodeGenEngine
             return template;
         }
 
-        public void AddNamespace(Class c)
-        {
-            if (!string.IsNullOrEmpty(Declaration.NamespaceTemplate))
-            {
-                AddDeclaration("NAMESPACE_DECLARATION", UseTemplate(c, Declaration.NamespaceTemplate));
-            }
-        }
-
-        public void AddInheritance(Class c)
-        {
-            /*if (c.BaseClasses.Count() >= 1)
-            {
-                sb.Append(" : ");
-                var lastBaseClass = c.BaseClasses.Last();
-                foreach (var baseClass in c.BaseClasses)
-                {
-                    baseClass.Accept(this);
-                    if (!baseClass.Equals(lastBaseClass))
-                    {
-                        sb.Append(", ");
-                    }
-                }
-                sb.Append("\n");
-            }*/
-        }
-
-        public void AddGettersAndSetters(Class c)
-        {
-            StringBuilder methodsSb = new StringBuilder();
-            foreach (var property in c.Properties)
-            {
-                if (property.GenerateGetter)
-                {
-                    AddLine(methodsSb, UseTemplate(property, Declaration.PropertyGetterTemplate));
-                }
-                AddNewLine(methodsSb);
-                if (property.GenerateSetter)
-                {
-                    AddLine(methodsSb, UseTemplate(property, Declaration.PropertySetterTemplate));
-                }
-                AddNewLine(methodsSb);
-                AddNewLine(methodsSb);
-            }
-            AddDeclaration("GETTERS_AND_SETTERS_DECLARATION", methodsSb.ToString());
-            c.Methods.ForEach(m => m.Accept(this));
-        }
-
-        public void AddConstructor(Class c)
-        {
-            StringBuilder constructorSb = new StringBuilder();
-            //CONSTRUCTOR
-            AddLine(constructorSb, UseTemplate(c, Declaration.DefaultConstructorDeclarationTemplate));
-            AddNewLine(constructorSb);
-            AddLine(constructorSb, $"{Declaration.OpenDefinitonBodyTemplate}");
-            AddNewLine(constructorSb);
-            AddLine(constructorSb, $"{Declaration.CloseDefinitonBodyTemplate}");
-            AddNewLine(constructorSb);
-
-            List<string> arguments = new();
-            List<string> propertyInitialization = new();
-            foreach (Property property in c.Properties.OrderBy(x => x.DefaultValue))
-            {
-                arguments.Add(string.IsNullOrEmpty(property.DefaultValue) ?
-                    UseTemplate(property, Declaration.ArgumentWithoutDefaultValueTemplate) :
-                    UseTemplate(property, Declaration.ArgumentWithDefaultValueTemplate));
-            }
-            string parametrizedConstructorTemplate = MapArguments(arguments, Declaration.ParameterizedConstructorDeclarationTemplate);
-            AddLine(constructorSb, UseTemplate(c, parametrizedConstructorTemplate));
-            AddNewLine(constructorSb);
-            AddLine(constructorSb, $"{Declaration.OpenDefinitonBodyTemplate}");
-            AddNewLine(constructorSb);
-            AddLine(constructorSb, $"{Declaration.CloseDefinitonBodyTemplate}");
-            AddNewLine(constructorSb);
-            AddDeclaration("CONSTRUCTORS_DECLARATION", constructorSb.ToString());
-        }
-
-        public void AddClassDeclaration(Class c)
-        {
-            StringBuilder classSb = new StringBuilder();
-            if (c.BaseClasses.Any())
-            {
-                AddLine(classSb, UseTemplate(c, Declaration.ClassDeclarationWithBaseClassTemplate));
-            }
-            else
-            {
-                AddLine(classSb, UseTemplate(c, Declaration.ClassDeclarationWithoutBaseClassTemplate));
-            }
-            AddDeclaration("CLASS_DECLARATION", classSb.ToString());
-        }
-
-
-
+        #region IVisitor Methods
         public void Visit(IElement element)
         {
             switch (element)
@@ -173,6 +84,58 @@ namespace CodeGenEngine
                     break;
             }
         }
+        #endregion
+
+        public void AddNamespace(Class c)
+        {
+            if (!string.IsNullOrEmpty(Declaration.NamespaceTemplate))
+            {
+                AddDeclaration("NAMESPACE_DECLARATION", UseTemplate(c, Declaration.NamespaceTemplate));
+            }
+        }
+
+        public void AddClassDeclaration(Class c)
+        {
+            StringBuilder classSb = new StringBuilder();
+            if (c.BaseClasses.Any())
+            {
+                AddLine(classSb, UseTemplate(c, Declaration.ClassDeclarationWithBaseClassTemplate));
+            }
+            else
+            {
+                AddLine(classSb, UseTemplate(c, Declaration.ClassDeclarationWithoutBaseClassTemplate));
+            }
+            AddDeclaration("CLASS_DECLARATION", classSb.ToString());
+        }
+
+        public void AddConstructor(Class c)
+        {
+            StringBuilder constructorSb = new StringBuilder();
+            //CONSTRUCTOR
+            AddLine(constructorSb, UseTemplate(c, Declaration.DefaultConstructorDeclarationTemplate));
+            AddNewLine(constructorSb);
+            AddLine(constructorSb, $"{Declaration.OpenDefinitonBodyTemplate}");
+            AddNewLine(constructorSb);
+            AddLine(constructorSb, $"{Declaration.CloseDefinitonBodyTemplate}");
+            AddNewLine(constructorSb);
+
+            List<string> arguments = new();
+            List<string> propertyInitialization = new();
+            foreach (Property property in c.Properties.OrderBy(x => x.DefaultValue))
+            {
+                arguments.Add(string.IsNullOrEmpty(property.DefaultValue) ?
+                    UseTemplate(property, Declaration.ArgumentWithoutDefaultValueTemplate) :
+                    UseTemplate(property, Declaration.ArgumentWithDefaultValueTemplate));
+            }
+            string parametrizedConstructorTemplate = MapArguments(arguments, Declaration.ParameterizedConstructorDeclarationTemplate);
+            AddLine(constructorSb, UseTemplate(c, parametrizedConstructorTemplate));
+            AddNewLine(constructorSb);
+            AddLine(constructorSb, $"{Declaration.OpenDefinitonBodyTemplate}");
+            AddNewLine(constructorSb);
+            AddLine(constructorSb, $"{Declaration.CloseDefinitonBodyTemplate}");
+            AddNewLine(constructorSb);
+            AddDeclaration("CONSTRUCTORS_DECLARATION", constructorSb.ToString());
+        }
 
         public void AddPropertyDeclaration(Property property)
         {
@@ -191,6 +154,27 @@ namespace CodeGenEngine
                     AddDeclaration("PROTECTED_PROPERTIES_DECLARATION", sb.ToString());
                     break;
             }
+        }
+
+        public void AddGettersAndSetters(Class c)
+        {
+            StringBuilder methodsSb = new StringBuilder();
+            foreach (var property in c.Properties)
+            {
+                if (property.GenerateGetter)
+                {
+                    AddLine(methodsSb, UseTemplate(property, Declaration.PropertyGetterTemplate));
+                }
+                AddNewLine(methodsSb);
+                if (property.GenerateSetter)
+                {
+                    AddLine(methodsSb, UseTemplate(property, Declaration.PropertySetterTemplate));
+                }
+                AddNewLine(methodsSb);
+                AddNewLine(methodsSb);
+            }
+            AddDeclaration("GETTERS_AND_SETTERS_DECLARATION", methodsSb.ToString());
+            c.Methods.ForEach(m => m.Accept(this));
         }
 
         public void AddMethodDeclaration(Method method)
@@ -232,7 +216,9 @@ namespace CodeGenEngine
             AddNewLine(sb);
             AddDeclaration("INCLUDES_DECLARATION", sb.ToString());
         }
+        #endregion
 
+        #region Private Methods
         private string UseTemplate(IMapped mapped, string template)
         {
             foreach ((var keyword, var value) in mapped.GetMapping())
@@ -251,12 +237,10 @@ namespace CodeGenEngine
         {
             if (declaration != null)
             {
-                //sb.Replace(keyword, declaration);
                 if (ClassDeclaration.TryGetValue(keyword, out string value))
                 {
                     ClassDeclaration[keyword] += (declaration);
                 }
-
             }
         }
 
@@ -275,8 +259,8 @@ namespace CodeGenEngine
 
         private void AddNewLine(StringBuilder sb)
         {
-            //sb.Append(Tabs(TabNum));
             sb.AppendLine("");
         }
+        #endregion
     }
 }
