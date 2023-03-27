@@ -7,8 +7,7 @@ namespace CodeGenEngine.Interface
         string GetCode(Class c);
         void AddNamespace(Class c);
         void AddInheritance(Class c);
-        void AddProperties(Class c);
-        void AddMetods(Class c);
+        void AddGettersAndSetters(Class c);
         void AddConstructor(Class c);
         void AddClassDeclaration(Class c);
     }

@@ -8,15 +8,16 @@ LanguageDeclaration CSharp = new LanguageDeclaration()
     ClassDeclarationWithBaseClassTemplate = "ACCESSOPERATOR class CLASSNAME : <BASECLASES>",
     ClassDeclarationWithoutBaseClassTemplate = "ACCESSOPERATOR class CLASSNAME",
     PropertyDefinititonTemplate = "ACCESSOPERATOR DATATYPE NAME { get; set; }",
-    PropertyGetterTemplate = "ACCESSOPERATOR DATATYPE GetNAME() { return this.NAME; }",
-    PropertySetterTemplate = "ACCESSOPERATOR void SetNAME(DATATYPE _NAME) { this.NAME = _NAME; }",
+    PropertyGetterTemplate = "ACCESSOPERATOR DATATYPE getNAME() { return this.NAME; }",
+    PropertySetterTemplate = "ACCESSOPERATOR void setNAME(DATATYPE _NAME) { this.NAME = _NAME; }",
     OpenDefinitonBodyTemplate = "{",
-    CloseDeclarationBodyTemplate = "}",
+    CloseDefinitonBodyTemplate = "}",
     DefaultConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME()",
     ParameterizedConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME(<ARGUMENTS>)",
     MethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)",
     ArgumentWithoutDefaultValueTemplate = "DATATYPE NAME",
     ArgumentWithDefaultValueTemplate = "DATATYPE NAME = DEFAULTVALUE",
+    ClassTemplate = "INCLUDES_DECLARATION\r\nNAMESPACE_DECLARATION\r\nCLASS_DECLARATION\r\n{\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPUBLIC_PROPERTIES_DECLARATION\r\nCONSTRUCTORS_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\n}"
 
 };
 
@@ -29,16 +30,35 @@ LanguageDeclaration Java = new LanguageDeclaration()
     PropertyGetterTemplate = "ACCESSOPERATOR DATATYPE getNAME() { return this.NAME; }",
     PropertySetterTemplate = "ACCESSOPERATOR void setNAME(DATATYPE _NAME) { this.NAME = _NAME; }",
     OpenDefinitonBodyTemplate = "{",
-    CloseDeclarationBodyTemplate = "}",
+    CloseDefinitonBodyTemplate = "}",
     DefaultConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME()",
     ParameterizedConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME(<ARGUMENTS>)",
     MethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)",
     ArgumentWithoutDefaultValueTemplate = "DATATYPE NAME",
     ArgumentWithDefaultValueTemplate = "DATATYPE NAME = DEFAULTVALUE",
+    ClassTemplate = "INCLUDES_DECLARATION\r\nNAMESPACE_DECLARATION\r\nCLASS_DECLARATION\r\n{\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPUBLIC_PROPERTIES_DECLARATION\r\nCONSTRUCTORS_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\n}"
+};
+
+LanguageDeclaration Cpp = new LanguageDeclaration()
+{
+    IncludeTemplate = "include #<INCLUDE>;",
+    ClassDeclarationWithBaseClassTemplate = "class CLASSNAME : <BASECLASES>",
+    ClassDeclarationWithoutBaseClassTemplate = "class CLASSNAME",
+    PropertyDefinititonTemplate = "DATATYPE NAME;",
+    PropertyGetterTemplate = "DATATYPE getNAME() { return this.NAME; }",
+    PropertySetterTemplate = "void setNAME(DATATYPE _NAME) { this.NAME = _NAME; }",
+    OpenDefinitonBodyTemplate = "{",
+    CloseDefinitonBodyTemplate = "}",
+    DefaultConstructorDeclarationTemplate = "CLASSNAME()",
+    ParameterizedConstructorDeclarationTemplate = "CLASSNAME(<ARGUMENTS>)",
+    MethodDeclarationTemplate = "DATATYPE NAME(<ARGUMENTS>)",
+    ArgumentWithoutDefaultValueTemplate = "DATATYPE NAME",
+    ArgumentWithDefaultValueTemplate = "DATATYPE NAME = DEFAULTVALUE",
+    ClassTemplate = "INCLUDES_DECLARATION\r\n\r\nCLASS_DECLARATION \r\n{\r\nprivate:\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\npublic:\r\nPUBLIC_PROPERTIES_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nCONSTRUCTORS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\n}"
 };
 
 
-CodeGenerator generator = new CodeGenerator(CSharp);
+CodeGenerator generator = new CodeGenerator(Java);
 
 Class @class = new()
 {

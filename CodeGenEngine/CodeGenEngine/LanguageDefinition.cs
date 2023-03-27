@@ -16,12 +16,14 @@ namespace CodeGenEngine
         public string PropertyGetterTemplate { get; set; } = string.Empty;
         public string PropertySetterTemplate { get; set; } = string.Empty;
         public string OpenDefinitonBodyTemplate { get; set; } = string.Empty;
-        public string CloseDeclarationBodyTemplate { get; set; } = string.Empty;
+        public string CloseDefinitonBodyTemplate { get; set; } = string.Empty;
         public string DefaultConstructorDeclarationTemplate { get; set; } = string.Empty;
         public string ParameterizedConstructorDeclarationTemplate { get; set; } = string.Empty;
         public string MethodDeclarationTemplate { get; set; } = string.Empty;
         public string ArgumentWithoutDefaultValueTemplate { get; set; } = string.Empty;
         public string ArgumentWithDefaultValueTemplate { get; set; } = string.Empty;
+        public string ClassTemplate { get; set; } = string.Empty;
+        public string SelfReferenceKeywordTemplate { get; set; } = string.Empty;
 
     }
 }
