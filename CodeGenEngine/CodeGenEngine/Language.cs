@@ -28,11 +28,6 @@ namespace CodeGenEngine
 
         private int TabNum { get; set; } = 0;
 
-        static string Tabs(int n)
-        {
-            return new string('\t', n);
-        }
-
         public Language(LanguageDeclaration declaration)
         {
             Declaration = declaration;
@@ -260,6 +255,14 @@ namespace CodeGenEngine
         private void AddNewLine(StringBuilder sb)
         {
             sb.AppendLine("");
+        }
+        #endregion
+
+        #region Private Static Methods
+        //todo move to utils?
+        static string Tabs(int n)
+        {
+            return new string('\t', n);
         }
         #endregion
     }
