@@ -10,7 +10,7 @@ namespace CodeGenEngine
 {
     public class Property : Variable, IElement, IMapped
     {
-        public Property(AccessOperator accessOperator, bool generateGetter, bool generateSetter, string name, DataType dataType, string defaultValue) : base(name, dataType, defaultValue)
+        public Property(AccessOperator accessOperator, bool generateGetter, bool generateSetter, string name, DataType dataType, string defaultValue = null) : base(name, dataType, defaultValue)
         {
             AccessOperator = accessOperator;
             GenerateGetter = generateGetter;
@@ -33,6 +33,7 @@ namespace CodeGenEngine
             {
                 { "NAME", this.Name },
                 { "DATATYPE", this.DataType.Key },
+                { "DEFAULTVALUE", this.DefaultValue },
                 { "ACCESSOPERATOR", this.AccessOperator.ToString().ToLower() },
             };
         }

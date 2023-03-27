@@ -65,6 +65,11 @@ namespace CodeGenEngine
             c.Properties.ForEach(p => p.Accept(this));
         }
 
+        public void AddMetods(Class c)
+        {
+            c.Methods.ForEach(m => m.Accept(this));
+        }
+
         public void AddConstructor(Class c)
         {
             //CONSTRUCTOR
@@ -72,8 +77,19 @@ namespace CodeGenEngine
             AddDeclaration($"{Declaration.OpenDefinitonBodyTemplate}");
             AddDeclaration($"{Declaration.OpenDefinitonBodyTemplate}");
             AddNewLine();
-            AddDeclaration(UseTemplate(c, Declaration.ParameterizedConstructorDeclarationTemplate));
+
+            List<string> arguments = new();
+            List<string> propertyInitialization = new();
+            foreach (Property property in c.Properties.OrderBy(x => x.DefaultValue))
+            {
+                arguments.Add(string.IsNullOrEmpty(property.DefaultValue) ?
+                    UseTemplate(property, Declaration.ArgumentWithoutDefaultValueTemplate) :
+                    UseTemplate(property, Declaration.ArgumentWithDefaultValueTemplate));
+            }
+            string parametrizedConstructorTemplate = MapArguments(arguments, Declaration.ParameterizedConstructorDeclarationTemplate);
+            AddDeclaration(UseTemplate(c, parametrizedConstructorTemplate));
             AddDeclaration($"{Declaration.OpenDefinitonBodyTemplate}");
+
             AddDeclaration($"{Declaration.OpenDefinitonBodyTemplate}");
             AddNewLine();
         }
@@ -93,9 +109,12 @@ namespace CodeGenEngine
             TabNum++;
             AddProperties(c);
             AddConstructor(c);
+            AddMetods(c);
             TabNum--;
             AddDeclaration($"{Declaration.CloseDeclarationBodyTemplate}");
         }
+
+
 
         public void Visit(IElement element)
         {
@@ -105,11 +124,8 @@ namespace CodeGenEngine
                     {
                         c.Includes.ForEach(i => i.Accept(this));
                         AddDeclaration($"");
-
                         AddNamespace(c);
-
                         AddClassDeclaration(c);
-
                     }
                     break;
                 case Include include:
@@ -117,9 +133,21 @@ namespace CodeGenEngine
                         AddDeclaration(UseTemplate(include, Declaration.IncludeTemplate));
                     }
                     break;
-                case BaseClass baseClass:
+                case Method method:
                     {
+                        List<string> arguments = new();
+                        foreach (Argument argument in method.Arguments.OrderBy(x => x.DefaultValue))
+                        {
+                            arguments.Add(string.IsNullOrEmpty(argument.DefaultValue) ?
+                                UseTemplate(argument, Declaration.ArgumentWithoutDefaultValueTemplate) :
+                                UseTemplate(argument, Declaration.ArgumentWithDefaultValueTemplate));
+                        }
+                        string methodTemplate = MapArguments(arguments, Declaration.MethodDeclarationTemplate);
+                        AddDeclaration(UseTemplate(method, methodTemplate));
+                        AddDeclaration($"{Declaration.OpenDefinitonBodyTemplate}");
 
+                        AddDeclaration($"{Declaration.OpenDefinitonBodyTemplate}");
+                        AddNewLine();
                     }
                     break;
                 case Property property:
@@ -148,6 +176,11 @@ namespace CodeGenEngine
                 template = template.Replace(keyword, value);
             }
             return template;
+        }
+
+        private string MapArguments(List<string> arguments, string template)
+        {
+            return template.Replace("<ARGUMENTS>", string.Join(", ", arguments));
         }
 
         private void AddDeclaration(string declaration)

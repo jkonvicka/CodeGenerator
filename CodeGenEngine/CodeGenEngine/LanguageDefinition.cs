@@ -19,6 +19,9 @@ namespace CodeGenEngine
         public string CloseDeclarationBodyTemplate { get; set; } = string.Empty;
         public string DefaultConstructorDeclarationTemplate { get; set; } = string.Empty;
         public string ParameterizedConstructorDeclarationTemplate { get; set; } = string.Empty;
+        public string MethodDeclarationTemplate { get; set; } = string.Empty;
+        public string ArgumentWithoutDefaultValueTemplate { get; set; } = string.Empty;
+        public string ArgumentWithDefaultValueTemplate { get; set; } = string.Empty;
 
     }
 }

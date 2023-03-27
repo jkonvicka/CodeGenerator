@@ -29,9 +29,7 @@ namespace CodeGenEngine
                 { "NAMESPACE", NameSpace },
                 { "ACCESSOPERATOR", AccessOperator.ToString().ToLower() },
                 { "CLASSNAME", Name },
-                { "<BASECLASES>", string.Join(", ", BaseClasses.Select(x=>x.Name)) },
-                { "<ARGUMENTS>", string.Join(", ", Properties.Select(x=>$"{x.DataType.Key} {x.Name}")) },
-
+                { "<BASECLASES>", string.Join(", ", BaseClasses.Select(x=>x.Name)) }
             };
         }
     }

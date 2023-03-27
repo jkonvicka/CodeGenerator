@@ -13,7 +13,10 @@ LanguageDeclaration CSharp = new LanguageDeclaration()
     OpenDefinitonBodyTemplate = "{",
     CloseDeclarationBodyTemplate = "}",
     DefaultConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME()",
-    ParameterizedConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME(<ARGUMENTS>)"
+    ParameterizedConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME(<ARGUMENTS>)",
+    MethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)",
+    ArgumentWithoutDefaultValueTemplate = "DATATYPE NAME",
+    ArgumentWithDefaultValueTemplate = "DATATYPE NAME = DEFAULTVALUE",
 
 };
 
@@ -29,7 +32,9 @@ LanguageDeclaration Java = new LanguageDeclaration()
     CloseDeclarationBodyTemplate = "}",
     DefaultConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME()",
     ParameterizedConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME(<ARGUMENTS>)",
-
+    MethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)",
+    ArgumentWithoutDefaultValueTemplate = "DATATYPE NAME",
+    ArgumentWithDefaultValueTemplate = "DATATYPE NAME = DEFAULTVALUE",
 };
 
 
@@ -52,9 +57,18 @@ Class @class = new()
                 },
     Properties = new List<Property>()
                 {
-                    new Property(AccessOperator.PUBLIC, true, true, "Id", new DataType("long"), null),
+                    new Property(AccessOperator.PUBLIC, true, true, "Id", new DataType("long")),
                     new Property(AccessOperator.PUBLIC, true, true,  "Name", new DataType("string"), "string.Empty"),
-                    new Property(AccessOperator.PRIVATE,  true, true, "_workNumber", new DataType("long"), null),
-                }
+                    new Property(AccessOperator.PRIVATE,  true, true, "_workNumber", new DataType("long")),
+                },
+    Methods = new List<Method>()
+    {
+        new Method(AccessOperator.PUBLIC, "Sleep", new DataType("bool"),
+                                                        new List<Argument>(){
+                                                                new Argument("duration", new DataType("long"), "100"),
+                                                                new Argument("something", new DataType("char"))
+                                                                            }
+                                                        )
+    }
 };
 generator.Generate(@class);

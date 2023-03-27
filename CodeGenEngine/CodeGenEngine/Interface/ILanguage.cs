@@ -8,6 +8,7 @@ namespace CodeGenEngine.Interface
         void AddNamespace(Class c);
         void AddInheritance(Class c);
         void AddProperties(Class c);
+        void AddMetods(Class c);
         void AddConstructor(Class c);
         void AddClassDeclaration(Class c);
     }
