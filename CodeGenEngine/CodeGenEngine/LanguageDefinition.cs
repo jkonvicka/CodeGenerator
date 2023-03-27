@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 
 namespace CodeGenEngine
 {
-    public class LanguageDefinition
+    public class LanguageDeclaration
     {
         public string IncludeTemplate { get; set; } = string.Empty;
         public string NamespaceTemplate { get; set; } = string.Empty;
-        public string ClassDefinitionWithoutBaseClassTemplate { get; set; } = string.Empty;
-        public string ClassDefinitionWithBaseClassTemplate { get; set; } = string.Empty;
+        public string ClassDeclarationWithoutBaseClassTemplate { get; set; } = string.Empty;
+        public string ClassDeclarationWithBaseClassTemplate { get; set; } = string.Empty;
         public string PropertyDefinititonTemplate { get; set; } = string.Empty;
         public string PropertyGetterTemplate { get; set; } = string.Empty;
         public string PropertySetterTemplate { get; set; } = string.Empty;
         public string OpenDefinitonBodyTemplate { get; set; } = string.Empty;
-        public string CloseDefinitionBodyTemplate { get; set; } = string.Empty;
+        public string CloseDeclarationBodyTemplate { get; set; } = string.Empty;
+        public string DefaultConstructorDeclarationTemplate { get; set; } = string.Empty;
+        public string ParameterizedConstructorDeclarationTemplate { get; set; } = string.Empty;
 
     }
 }

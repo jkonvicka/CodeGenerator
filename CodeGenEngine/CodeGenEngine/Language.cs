@@ -12,7 +12,7 @@ namespace CodeGenEngine
     public class Language : IVisitor, ILanguage
     {
         private StringBuilder sb { get; set; } = new StringBuilder();
-        public LanguageDefinition Definition { get; set; }
+        public LanguageDeclaration Declaration { get; set; }
 
         private int TabNum { get; set; } = 0;
 
@@ -21,9 +21,9 @@ namespace CodeGenEngine
             return new string('\t', n);
         }
 
-        public Language(LanguageDefinition definition)
+        public Language(LanguageDeclaration declaration)
         {
-            Definition = definition;
+            Declaration = declaration;
         }
 
         public string GetCode(Class @class)
@@ -34,10 +34,10 @@ namespace CodeGenEngine
 
         public void AddNamespace(Class c)
         {
-            if (!string.IsNullOrEmpty(c.NameSpace))
+            if (!string.IsNullOrEmpty(Declaration.NamespaceTemplate))
             {
-                sb.AppendLine(UseTemplate(c, Definition.NamespaceTemplate));
-                TabNum += 1;
+                AddDeclaration(UseTemplate(c, Declaration.NamespaceTemplate));
+                //TabNum++;
             }
         }
 
@@ -68,37 +68,33 @@ namespace CodeGenEngine
         public void AddConstructor(Class c)
         {
             //CONSTRUCTOR
-            /*sb.AppendLine($"\n\t\t{AccessOperators[c.AccessOperator]} {c.Name}(){Keywords[Keyword.DEFINITIONSTART]}");
-            sb.AppendLine($"\t\t{Keywords[Keyword.OPENBODY]}");
-            sb.AppendLine($"\t\t{Keywords[Keyword.CLOSEBODY]}");*/
+            AddDeclaration(UseTemplate(c, Declaration.DefaultConstructorDeclarationTemplate));
+            AddDeclaration($"{Declaration.OpenDefinitonBodyTemplate}");
+            AddDeclaration($"{Declaration.OpenDefinitonBodyTemplate}");
+            AddNewLine();
+            AddDeclaration(UseTemplate(c, Declaration.ParameterizedConstructorDeclarationTemplate));
+            AddDeclaration($"{Declaration.OpenDefinitonBodyTemplate}");
+            AddDeclaration($"{Declaration.OpenDefinitonBodyTemplate}");
+            AddNewLine();
         }
 
-        public void AddClassDefinition(Class c)
+        public void AddClassDeclaration(Class c)
         {
-            sb.Append(Tabs(TabNum));
             if (c.BaseClasses.Any())
             {
-                sb.AppendLine(UseTemplate(c, Definition.ClassDefinitionWithBaseClassTemplate));
+                AddDeclaration(UseTemplate(c, Declaration.ClassDeclarationWithBaseClassTemplate));
             }
             else
             {
-                sb.AppendLine(UseTemplate(c, Definition.ClassDefinitionWithoutBaseClassTemplate));
+                AddDeclaration(UseTemplate(c, Declaration.ClassDeclarationWithoutBaseClassTemplate));
             }
-            sb.Append(Tabs(TabNum));
-            sb.AppendLine($"{Definition.OpenDefinitonBodyTemplate}");
-            var tabNumLocal = TabNum;
+            AddDeclaration($"{Declaration.OpenDefinitonBodyTemplate}");
+
             TabNum++;
             AddProperties(c);
             AddConstructor(c);
-            sb.Append(Tabs(tabNumLocal));
-            sb.AppendLine($"{Definition.CloseDefinitionBodyTemplate}");
-            /*sb.Append($"\t{AccessOperators[c.AccessOperator]} {Keywords[Keyword.CLASS]} {c.Name}{Keywords[Keyword.DEFINITIONSTART]}");
-            AddInheritance(c);
-
-            sb.AppendLine($"\t{Keywords[Keyword.OPENBODY]}");
-            
-
-            sb.AppendLine($"\t{Keywords[Keyword.CLOSEBODY]}");*/
+            TabNum--;
+            AddDeclaration($"{Declaration.CloseDeclarationBodyTemplate}");
         }
 
         public void Visit(IElement element)
@@ -108,70 +104,38 @@ namespace CodeGenEngine
                 case Class c:
                     {
                         c.Includes.ForEach(i => i.Accept(this));
-                        sb.AppendLine($"");
+                        AddDeclaration($"");
 
                         AddNamespace(c);
 
-                        sb.AppendLine($"{Definition.OpenDefinitonBodyTemplate}");
-
-                        AddClassDefinition(c);
-
-
-                        sb.AppendLine($"{Definition.CloseDefinitionBodyTemplate}");
+                        AddClassDeclaration(c);
 
                     }
                     break;
                 case Include include:
                     {
-                        sb.AppendLine(UseTemplate(include, Definition.IncludeTemplate));
+                        AddDeclaration(UseTemplate(include, Declaration.IncludeTemplate));
                     }
                     break;
                 case BaseClass baseClass:
                     {
-                        //sb.Append($"{baseClass.Name}");
+
                     }
                     break;
                 case Property property:
                     {
-                        sb.Append(Tabs(TabNum));
-                        sb.AppendLine(UseTemplate(property, Definition.PropertyDefinititonTemplate));
+                        AddDeclaration(UseTemplate(property, Declaration.PropertyDefinititonTemplate));
 
                         if (property.GenerateGetter)
                         {
-                            sb.Append(Tabs(TabNum));
-                            sb.AppendLine(UseTemplate(property, Definition.PropertyGetterTemplate));
+                            AddDeclaration(UseTemplate(property, Declaration.PropertyGetterTemplate));
                         }
 
                         if (property.GenerateSetter)
                         {
-                            sb.Append(Tabs(TabNum));
-                            sb.AppendLine(UseTemplate(property, Definition.PropertyGetterTemplate));
+                            AddDeclaration(UseTemplate(property, Declaration.PropertyGetterTemplate));
                         }
-
-
-                        /*
-                        sb.Append($"\t\t{AccessOperators[property.AccessOperator]} {property.DataType.Key} {property.Name}");
-                        if (!string.IsNullOrEmpty(property.DefaultValue))
-                        {
-                            sb.Append($" = {property.DefaultValue}");
-                        }
-                        sb.AppendLine(";");
-
-                        if (property.GenerateGetter)
-                        {
-                            sb.AppendLine($"\t\t{AccessOperators[property.AccessOperator]} {property.DataType.Key} {Keywords[Keyword.GETTERPREFIX]}{property.Name}()");
-                            sb.AppendLine($"\t\t{Keywords[Keyword.OPENBODY]}");
-                            sb.AppendLine($"\t\t\treturn {Keywords[Keyword.SELFCLASSPOINTER]}.{property.Name}{Keywords[Keyword.ENDOFCOMMAND]}");
-                            sb.AppendLine($"\t\t{Keywords[Keyword.CLOSEBODY]}");
-                        }
-
-                        if (property.GenerateSetter)
-                        {
-                            sb.AppendLine($"\t\t{AccessOperators[property.AccessOperator]} void {Keywords[Keyword.SETTERPREFIX]}{property.Name}({property.DataType.Key} _{property.Name})");
-                            sb.AppendLine($"\t\t{Keywords[Keyword.OPENBODY]}");
-                            sb.AppendLine($"\t\t\t{Keywords[Keyword.SELFCLASSPOINTER]}.{property.Name} = _{property.Name}{Keywords[Keyword.ENDOFCOMMAND]}");
-                            sb.AppendLine($"\t\t{Keywords[Keyword.CLOSEBODY]}");
-                        }*/
+                        AddNewLine();
                     }
                     break;
             }
@@ -184,6 +148,21 @@ namespace CodeGenEngine
                 template = template.Replace(keyword, value);
             }
             return template;
+        }
+
+        private void AddDeclaration(string declaration)
+        {
+            if (declaration != null)
+            {
+                sb.Append(Tabs(TabNum));
+                sb.AppendLine(declaration);
+            }
+        }
+
+        private void AddNewLine()
+        {
+            //sb.Append(Tabs(TabNum));
+            sb.AppendLine("");
         }
     }
 }
