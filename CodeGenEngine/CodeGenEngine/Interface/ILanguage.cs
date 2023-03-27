@@ -9,6 +9,6 @@ namespace CodeGenEngine.Interface
         void AddInheritance(Class c);
         void AddProperties(Class c);
         void AddConstructor(Class c);
-        void AddClassDefinition(Class c);
+        void AddClassDeclaration(Class c);
     }
 }

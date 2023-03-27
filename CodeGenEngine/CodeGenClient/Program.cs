@@ -1,35 +1,39 @@
 ﻿
 using CodeGenEngine;
 
-LanguageDefinition CSharp = new LanguageDefinition()
+LanguageDeclaration CSharp = new LanguageDeclaration()
 {
     IncludeTemplate = "using INCLUDE;",
-    NamespaceTemplate = "namespace NAMESPACE",
-    ClassDefinitionWithBaseClassTemplate = "ACCESSOPERATOR class CLASSNAME : <BASECLASES>",
-    ClassDefinitionWithoutBaseClassTemplate = "ACCESSOPERATOR class CLASSNAME",
+    NamespaceTemplate = "namespace NAMESPACE;",
+    ClassDeclarationWithBaseClassTemplate = "ACCESSOPERATOR class CLASSNAME : <BASECLASES>",
+    ClassDeclarationWithoutBaseClassTemplate = "ACCESSOPERATOR class CLASSNAME",
     PropertyDefinititonTemplate = "ACCESSOPERATOR DATATYPE NAME { get; set; }",
     PropertyGetterTemplate = "ACCESSOPERATOR DATATYPE GetNAME() { return this.NAME; }",
     PropertySetterTemplate = "ACCESSOPERATOR void SetNAME(DATATYPE _NAME) { this.NAME = _NAME; }",
     OpenDefinitonBodyTemplate = "{",
-    CloseDefinitionBodyTemplate = "}",
+    CloseDeclarationBodyTemplate = "}",
+    DefaultConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME()",
+    ParameterizedConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME(<ARGUMENTS>)"
 
 };
 
-LanguageDefinition Java = new LanguageDefinition()
+LanguageDeclaration Java = new LanguageDeclaration()
 {
     IncludeTemplate = "import INCLUDE;",
-    ClassDefinitionWithBaseClassTemplate = "ACCESSOPERATOR class CLASSNAME extends <BASECLASES>",
-    ClassDefinitionWithoutBaseClassTemplate = "ACCESSOPERATOR class CLASSNAME",
+    ClassDeclarationWithBaseClassTemplate = "ACCESSOPERATOR class CLASSNAME extends <BASECLASES>",
+    ClassDeclarationWithoutBaseClassTemplate = "ACCESSOPERATOR class CLASSNAME",
     PropertyDefinititonTemplate = "ACCESSOPERATOR DATATYPE NAME;",
     PropertyGetterTemplate = "ACCESSOPERATOR DATATYPE getNAME() { return this.NAME; }",
     PropertySetterTemplate = "ACCESSOPERATOR void setNAME(DATATYPE _NAME) { this.NAME = _NAME; }",
     OpenDefinitonBodyTemplate = "{",
-    CloseDefinitionBodyTemplate = "}",
+    CloseDeclarationBodyTemplate = "}",
+    DefaultConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME()",
+    ParameterizedConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME(<ARGUMENTS>)",
 
 };
 
 
-CodeGenerator generator = new CodeGenerator(Java);
+CodeGenerator generator = new CodeGenerator(CSharp);
 
 Class @class = new()
 {
