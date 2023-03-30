@@ -106,13 +106,17 @@ namespace CodeGenEngine
         public void AddConstructor(Class c)
         {
             StringBuilder constructorSb = new StringBuilder();
-            //CONSTRUCTOR
-            AddLine(constructorSb, UseTemplate(c, Declaration.DefaultConstructorDeclarationTemplate));
-            AddNewLine(constructorSb);
-            AddLine(constructorSb, $"{Declaration.OpenDefinitonBodyTemplate}");
-            AddNewLine(constructorSb);
-            AddLine(constructorSb, $"{Declaration.CloseDefinitonBodyTemplate}");
-            AddNewLine(constructorSb);
+
+            if (c.GenerateDefaultConstructor)
+            {
+                // Default constructor
+                AddLine(constructorSb, UseTemplate(c, Declaration.DefaultConstructorDeclarationTemplate));
+                AddNewLine(constructorSb);
+                AddLine(constructorSb, $"{Declaration.OpenDefinitonBodyTemplate}");
+                AddNewLine(constructorSb);
+                AddLine(constructorSb, $"{Declaration.CloseDefinitonBodyTemplate}");
+                AddNewLine(constructorSb);
+            }
 
             List<string> arguments = new();
             List<string> propertyInitialization = new();
@@ -121,12 +125,24 @@ namespace CodeGenEngine
                 arguments.Add(string.IsNullOrEmpty(property.DefaultValue) ?
                     UseTemplate(property, Declaration.ArgumentWithoutDefaultValueTemplate) :
                     UseTemplate(property, Declaration.ArgumentWithDefaultValueTemplate));
+                propertyInitialization.Add($"{UseTemplate(property, Declaration.PropertyInitializationTemplate)}");
             }
+
+            // Parametrized constructor head definition
             string parametrizedConstructorTemplate = MapArguments(arguments, Declaration.ParameterizedConstructorDeclarationTemplate);
             AddLine(constructorSb, UseTemplate(c, parametrizedConstructorTemplate));
             AddNewLine(constructorSb);
             AddLine(constructorSb, $"{Declaration.OpenDefinitonBodyTemplate}");
             AddNewLine(constructorSb);
+
+            // Property initialization
+            TabNum++;
+            foreach (string propertyInitializationLine in propertyInitialization)
+            {
+                AddLine(constructorSb, propertyInitializationLine);
+                AddNewLine(constructorSb);
+            }
+            TabNum--;
             AddLine(constructorSb, $"{Declaration.CloseDefinitonBodyTemplate}");
             AddNewLine(constructorSb);
             AddDeclaration("CONSTRUCTORS_DECLARATION", constructorSb.ToString());

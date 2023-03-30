@@ -23,7 +23,7 @@ namespace CodeGenEngine
         public string ArgumentWithoutDefaultValueTemplate { get; set; } = string.Empty;
         public string ArgumentWithDefaultValueTemplate { get; set; } = string.Empty;
         public string ClassTemplate { get; set; } = string.Empty;
-        public string SelfReferenceKeywordTemplate { get; set; } = string.Empty;
+        public string PropertyInitializationTemplate { get; set; } = string.Empty;
 
     }
 }
