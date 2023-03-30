@@ -15,10 +15,11 @@ LanguageDeclaration CSharp = new LanguageDeclaration()
     CloseDefinitonBodyTemplate = "}",
     DefaultConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME()",
     ParameterizedConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME(<ARGUMENTS>)",
-    MethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)",
+    PublicMethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)",
+    PrivateMethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)",
     ArgumentWithoutDefaultValueTemplate = "DATATYPE NAME",
     ArgumentWithDefaultValueTemplate = "DATATYPE NAME = DEFAULTVALUE",
-    ClassTemplate = "INCLUDES_DECLARATION\r\nNAMESPACE_DECLARATION\r\nCLASS_DECLARATION\r\n{\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPUBLIC_PROPERTIES_DECLARATION\r\nCONSTRUCTORS_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\n}",
+    ClassTemplate = "INCLUDES_DECLARATION\r\nNAMESPACE_DECLARATION\r\nCLASS_DECLARATION\r\n{\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPUBLIC_PROPERTIES_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\n}",
     PropertyInitializationTemplate = "this.NAME = NAME;"
 };
 
@@ -35,10 +36,11 @@ LanguageDeclaration Java = new LanguageDeclaration()
     CloseDefinitonBodyTemplate = "}",
     DefaultConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME()",
     ParameterizedConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME(<ARGUMENTS>)",
-    MethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)",
+    PublicMethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)",
+    PrivateMethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)",
     ArgumentWithoutDefaultValueTemplate = "DATATYPE NAME",
     ArgumentWithDefaultValueTemplate = "DATATYPE NAME = DEFAULTVALUE",
-    ClassTemplate = "INCLUDES_DECLARATION\r\nNAMESPACE_DECLARATION\r\nCLASS_DECLARATION\r\n{\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPUBLIC_PROPERTIES_DECLARATION\r\nCONSTRUCTORS_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\n}",
+    ClassTemplate = "INCLUDES_DECLARATION\r\nNAMESPACE_DECLARATION\r\nCLASS_DECLARATION\r\n{\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPUBLIC_PROPERTIES_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\n}",
     PropertyInitializationTemplate = "this.NAME = NAME;"
 };
 
@@ -55,18 +57,35 @@ LanguageDeclaration Cpp = new LanguageDeclaration()
     CloseDefinitonBodyTemplate = "}",
     DefaultConstructorDeclarationTemplate = "CLASSNAME()",
     ParameterizedConstructorDeclarationTemplate = "CLASSNAME(<ARGUMENTS>)",
-    MethodDeclarationTemplate = "DATATYPE NAME(<ARGUMENTS>)",
+    PublicMethodDeclarationTemplate = "DATATYPE NAME(<ARGUMENTS>)",
+    PrivateMethodDeclarationTemplate = "DATATYPE NAME(<ARGUMENTS>)",
     ArgumentWithoutDefaultValueTemplate = "DATATYPE NAME",
     ArgumentWithDefaultValueTemplate = "DATATYPE NAME = DEFAULTVALUE",
-    ClassTemplate = "INCLUDES_DECLARATION\r\n\r\nCLASS_DECLARATION \r\n{\r\nprivate:\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\npublic:\r\nPUBLIC_PROPERTIES_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nCONSTRUCTORS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\n}",
+    ClassTemplate = "INCLUDES_DECLARATION\r\n\r\nCLASS_DECLARATION \r\n{\r\nprivate:\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\npublic:\r\nPUBLIC_PROPERTIES_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\n}",
     PropertyInitializationTemplate = "this.NAME = NAME;"
 };
 
+LanguageDeclaration Python = new LanguageDeclaration()
+{
+    IncludeTemplate = "import INCLUDE",
+    ClassDeclarationWithBaseClassTemplate = "class CLASSNAME(<BASECLASES>):",
+    ClassDeclarationWithoutBaseClassTemplate = "class CLASSNAME:",
+    PropertyDefinititonTemplate = "",
+    PropertyGetterTemplate = "def getNAME() => DATAYPE:\n\t\treturn self.NAME",
+    PropertySetterTemplate = "def setNAME(self, _NAME : DATATYPE) => DATAYPE:\n\t\tself.NAME = _NAME\n\t\treturn",
+    OpenDefinitonBodyTemplate = "",
+    CloseDefinitonBodyTemplate = "",
+    DefaultConstructorDeclarationTemplate = "",
+    ParameterizedConstructorDeclarationTemplate = "def __init__(self, <ARGUMENTS>):",
+    PublicMethodDeclarationTemplate = "def NAME(self, <ARGUMENTS>) => DATAYPE:\n\t\tpass",
+    PrivateMethodDeclarationTemplate = "def __NAME(self, <ARGUMENTS>) => DATAYPE:\n\t\tpass",
+    ArgumentWithoutDefaultValueTemplate = "NAME : DATATYPE",
+    ArgumentWithDefaultValueTemplate = "NAME : DATATYPE = DEFAULTVALUE",
+    ClassTemplate = "INCLUDES_DECLARATION\r\nCLASS_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION",
+    PropertyInitializationTemplate = "self.NAME = NAME"
+};
 
-string json = JsonConvert.SerializeObject(Cpp);
-Console.WriteLine(json);
-
-CodeGenerator generator = new CodeGenerator(CSharp);
+CodeGenerator generator = new CodeGenerator(Python);
 
 Class @class = new()
 {
