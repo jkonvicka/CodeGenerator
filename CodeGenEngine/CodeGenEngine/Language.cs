@@ -19,7 +19,8 @@ namespace CodeGenEngine
             {"PRIVATE_PROPERTIES_DECLARATION", string.Empty },
             {"PRIVATE_METHODS_DECLARATION", string.Empty },
             {"PUBLIC_PROPERTIES_DECLARATION", string.Empty },
-            {"CONSTRUCTORS_DECLARATION", string.Empty },
+            {"DEFAULT_CONSTRUCTOR_DECLARATION", string.Empty },
+            {"PARAMETRIZED_CONSTRUCTOR_DECLARATION", string.Empty },
             {"GETTERS_AND_SETTERS_DECLARATION", string.Empty },
             {"PUBLIC_METHODS_DECLARATION", string.Empty },
         };
@@ -106,13 +107,17 @@ namespace CodeGenEngine
         public void AddConstructor(Class c)
         {
             StringBuilder constructorSb = new StringBuilder();
-            //CONSTRUCTOR
-            AddLine(constructorSb, UseTemplate(c, Declaration.DefaultConstructorDeclarationTemplate));
-            AddNewLine(constructorSb);
-            AddLine(constructorSb, $"{Declaration.OpenDefinitonBodyTemplate}");
-            AddNewLine(constructorSb);
-            AddLine(constructorSb, $"{Declaration.CloseDefinitonBodyTemplate}");
-            AddNewLine(constructorSb);
+
+            if (c.GenerateDefaultConstructor)
+            {
+                // Default constructor
+                AddLine(constructorSb, UseTemplate(c, Declaration.DefaultConstructorDeclarationTemplate));
+                AddNewLine(constructorSb);
+                AddLine(constructorSb, $"{Declaration.OpenDefinitonBodyTemplate}");
+                AddNewLine(constructorSb);
+                AddLine(constructorSb, $"{Declaration.CloseDefinitonBodyTemplate}");
+                AddNewLine(constructorSb);
+            }
 
             List<string> arguments = new();
             List<string> propertyInitialization = new();
@@ -121,15 +126,30 @@ namespace CodeGenEngine
                 arguments.Add(string.IsNullOrEmpty(property.DefaultValue) ?
                     UseTemplate(property, Declaration.ArgumentWithoutDefaultValueTemplate) :
                     UseTemplate(property, Declaration.ArgumentWithDefaultValueTemplate));
+                propertyInitialization.Add($"{UseTemplate(property, Declaration.PropertyInitializationTemplate)}");
             }
+            AddDeclaration("DEFAULT_CONSTRUCTOR_DECLARATION", constructorSb.ToString());
+
+            constructorSb = new StringBuilder();
+            // Parametrized constructor head definition
             string parametrizedConstructorTemplate = MapArguments(arguments, Declaration.ParameterizedConstructorDeclarationTemplate);
             AddLine(constructorSb, UseTemplate(c, parametrizedConstructorTemplate));
-            AddNewLine(constructorSb);
+            if (!string.IsNullOrEmpty(Declaration.OpenDefinitonBodyTemplate))
+                AddNewLine(constructorSb);
             AddLine(constructorSb, $"{Declaration.OpenDefinitonBodyTemplate}");
             AddNewLine(constructorSb);
+
+            // Property initialization
+            TabNum++;
+            foreach (string propertyInitializationLine in propertyInitialization)
+            {
+                AddLine(constructorSb, propertyInitializationLine);
+                AddNewLine(constructorSb);
+            }
+            TabNum--;
             AddLine(constructorSb, $"{Declaration.CloseDefinitonBodyTemplate}");
             AddNewLine(constructorSb);
-            AddDeclaration("CONSTRUCTORS_DECLARATION", constructorSb.ToString());
+            AddDeclaration("PARAMETRIZED_CONSTRUCTOR_DECLARATION", constructorSb.ToString());
         }
 
         public void AddPropertyDeclaration(Property property)
@@ -182,7 +202,19 @@ namespace CodeGenEngine
                     UseTemplate(argument, Declaration.ArgumentWithoutDefaultValueTemplate) :
                     UseTemplate(argument, Declaration.ArgumentWithDefaultValueTemplate));
             }
-            string methodTemplate = MapArguments(arguments, Declaration.MethodDeclarationTemplate);
+            string methodTemplate = string.Empty;
+            if (method.AccessOperator == AccessOperator.PRIVATE)
+            {
+                methodTemplate = MapArguments(arguments, Declaration.PrivateMethodDeclarationTemplate);
+            }
+            else if (method.AccessOperator == AccessOperator.PUBLIC)
+            {
+                methodTemplate = MapArguments(arguments, Declaration.PublicMethodDeclarationTemplate);
+            }
+            else
+            {
+                throw new NotSupportedException($"Not supported method ACCESS OPERATOR {method.AccessOperator}");
+            }
             AddLine(sb, UseTemplate(method, methodTemplate));
             AddNewLine(sb);
             AddLine(sb, $"{Declaration.OpenDefinitonBodyTemplate}");
@@ -241,6 +273,8 @@ namespace CodeGenEngine
 
         private void AddLine(StringBuilder sb, string declaration, bool useTab = true)
         {
+            if (string.IsNullOrEmpty(declaration))
+                return;
             if (declaration != null)
             {
                 if (useTab)

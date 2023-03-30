@@ -19,11 +19,12 @@ namespace CodeGenEngine
         public string CloseDefinitonBodyTemplate { get; set; } = string.Empty;
         public string DefaultConstructorDeclarationTemplate { get; set; } = string.Empty;
         public string ParameterizedConstructorDeclarationTemplate { get; set; } = string.Empty;
-        public string MethodDeclarationTemplate { get; set; } = string.Empty;
+        public string PublicMethodDeclarationTemplate { get; set; } = string.Empty;
+        public string PrivateMethodDeclarationTemplate { get; set; } = string.Empty;
         public string ArgumentWithoutDefaultValueTemplate { get; set; } = string.Empty;
         public string ArgumentWithDefaultValueTemplate { get; set; } = string.Empty;
         public string ClassTemplate { get; set; } = string.Empty;
-        public string SelfReferenceKeywordTemplate { get; set; } = string.Empty;
+        public string PropertyInitializationTemplate { get; set; } = string.Empty;
 
     }
 }

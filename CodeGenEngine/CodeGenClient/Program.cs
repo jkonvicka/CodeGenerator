@@ -1,5 +1,6 @@
 ﻿
 using CodeGenEngine;
+using Newtonsoft.Json;
 
 LanguageDeclaration CSharp = new LanguageDeclaration()
 {
@@ -14,12 +15,14 @@ LanguageDeclaration CSharp = new LanguageDeclaration()
     CloseDefinitonBodyTemplate = "}",
     DefaultConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME()",
     ParameterizedConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME(<ARGUMENTS>)",
-    MethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)",
+    PublicMethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)",
+    PrivateMethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)",
     ArgumentWithoutDefaultValueTemplate = "DATATYPE NAME",
     ArgumentWithDefaultValueTemplate = "DATATYPE NAME = DEFAULTVALUE",
-    ClassTemplate = "INCLUDES_DECLARATION\r\nNAMESPACE_DECLARATION\r\nCLASS_DECLARATION\r\n{\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPUBLIC_PROPERTIES_DECLARATION\r\nCONSTRUCTORS_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\n}"
-
+    ClassTemplate = "INCLUDES_DECLARATION\r\nNAMESPACE_DECLARATION\r\nCLASS_DECLARATION\r\n{\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPUBLIC_PROPERTIES_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\n}",
+    PropertyInitializationTemplate = "this.NAME = NAME;"
 };
+
 
 LanguageDeclaration Java = new LanguageDeclaration()
 {
@@ -33,15 +36,18 @@ LanguageDeclaration Java = new LanguageDeclaration()
     CloseDefinitonBodyTemplate = "}",
     DefaultConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME()",
     ParameterizedConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME(<ARGUMENTS>)",
-    MethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)",
+    PublicMethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)",
+    PrivateMethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)",
     ArgumentWithoutDefaultValueTemplate = "DATATYPE NAME",
     ArgumentWithDefaultValueTemplate = "DATATYPE NAME = DEFAULTVALUE",
-    ClassTemplate = "INCLUDES_DECLARATION\r\nNAMESPACE_DECLARATION\r\nCLASS_DECLARATION\r\n{\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPUBLIC_PROPERTIES_DECLARATION\r\nCONSTRUCTORS_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\n}"
+    ClassTemplate = "INCLUDES_DECLARATION\r\nNAMESPACE_DECLARATION\r\nCLASS_DECLARATION\r\n{\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPUBLIC_PROPERTIES_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\n}",
+    PropertyInitializationTemplate = "this.NAME = NAME;"
 };
+
 
 LanguageDeclaration Cpp = new LanguageDeclaration()
 {
-    IncludeTemplate = "include #<INCLUDE>;",
+    IncludeTemplate = "#include <INCLUDE>;",
     ClassDeclarationWithBaseClassTemplate = "class CLASSNAME : <BASECLASES>",
     ClassDeclarationWithoutBaseClassTemplate = "class CLASSNAME",
     PropertyDefinititonTemplate = "DATATYPE NAME;",
@@ -51,20 +57,42 @@ LanguageDeclaration Cpp = new LanguageDeclaration()
     CloseDefinitonBodyTemplate = "}",
     DefaultConstructorDeclarationTemplate = "CLASSNAME()",
     ParameterizedConstructorDeclarationTemplate = "CLASSNAME(<ARGUMENTS>)",
-    MethodDeclarationTemplate = "DATATYPE NAME(<ARGUMENTS>)",
+    PublicMethodDeclarationTemplate = "DATATYPE NAME(<ARGUMENTS>)",
+    PrivateMethodDeclarationTemplate = "DATATYPE NAME(<ARGUMENTS>)",
     ArgumentWithoutDefaultValueTemplate = "DATATYPE NAME",
     ArgumentWithDefaultValueTemplate = "DATATYPE NAME = DEFAULTVALUE",
-    ClassTemplate = "INCLUDES_DECLARATION\r\n\r\nCLASS_DECLARATION \r\n{\r\nprivate:\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\npublic:\r\nPUBLIC_PROPERTIES_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nCONSTRUCTORS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\n}"
+    ClassTemplate = "INCLUDES_DECLARATION\r\n\r\nCLASS_DECLARATION \r\n{\r\nprivate:\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\npublic:\r\nPUBLIC_PROPERTIES_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\n}",
+    PropertyInitializationTemplate = "this.NAME = NAME;"
 };
 
+LanguageDeclaration Python = new LanguageDeclaration()
+{
+    IncludeTemplate = "import INCLUDE",
+    ClassDeclarationWithBaseClassTemplate = "class CLASSNAME(<BASECLASES>):",
+    ClassDeclarationWithoutBaseClassTemplate = "class CLASSNAME:",
+    PropertyDefinititonTemplate = "",
+    PropertyGetterTemplate = "def getNAME() => DATAYPE:\n\t\treturn self.NAME",
+    PropertySetterTemplate = "def setNAME(self, _NAME : DATATYPE) => DATAYPE:\n\t\tself.NAME = _NAME\n\t\treturn",
+    OpenDefinitonBodyTemplate = "",
+    CloseDefinitonBodyTemplate = "",
+    DefaultConstructorDeclarationTemplate = "",
+    ParameterizedConstructorDeclarationTemplate = "def __init__(self, <ARGUMENTS>):",
+    PublicMethodDeclarationTemplate = "def NAME(self, <ARGUMENTS>) => DATAYPE:\n\t\tpass",
+    PrivateMethodDeclarationTemplate = "def __NAME(self, <ARGUMENTS>) => DATAYPE:\n\t\tpass",
+    ArgumentWithoutDefaultValueTemplate = "NAME : DATATYPE",
+    ArgumentWithDefaultValueTemplate = "NAME : DATATYPE = DEFAULTVALUE",
+    ClassTemplate = "INCLUDES_DECLARATION\r\nCLASS_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION",
+    PropertyInitializationTemplate = "self.NAME = NAME"
+};
 
-CodeGenerator generator = new CodeGenerator(Java);
+CodeGenerator generator = new CodeGenerator(Python);
 
 Class @class = new()
 {
     Name = "User",
     NameSpace = "DemoApplication",
     AccessOperator = AccessOperator.PUBLIC,
+    GenerateDefaultConstructor = false,
     Includes = new List<Include>()
                 {
                     new Include("System"),
@@ -78,12 +106,12 @@ Class @class = new()
     Properties = new List<Property>()
                 {
                     new Property(AccessOperator.PUBLIC, true, true, "Id", new DataType("long")),
-                    new Property(AccessOperator.PUBLIC, true, true,  "Name", new DataType("string"), "string.Empty"),
+                    new Property(AccessOperator.PRIVATE, true, true,  "Name", new DataType("string"), "string.Empty"),
                     new Property(AccessOperator.PRIVATE,  true, true, "_workNumber", new DataType("long")),
                 },
     Methods = new List<Method>()
     {
-        new Method(AccessOperator.PUBLIC, "Sleep", new DataType("bool"),
+        new Method(AccessOperator.PRIVATE, "Sleep", new DataType("bool"),
                                                         new List<Argument>(){
                                                                 new Argument("duration", new DataType("long"), "100"),
                                                                 new Argument("something", new DataType("char"))
