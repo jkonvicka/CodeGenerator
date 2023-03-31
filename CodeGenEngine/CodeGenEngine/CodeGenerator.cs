@@ -14,14 +14,10 @@ namespace CodeGenEngine
             _language = new Language(languageDefiniton);
         }
 
-        public void Generate(Class @class)
+        public string Generate(Class @class)
         {
-            StringBuilder sb = new StringBuilder();
-
-
             string output = _language.GetCode(@class);
-
-            Console.WriteLine(output);
+            return output;
         }
         public void Generate(Class @class, string @namespace, string outputPath)
         {

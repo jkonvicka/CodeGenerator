@@ -17,8 +17,6 @@ namespace CodeGenEngine
         public List<Property> Properties {get; set;} = new();
         public List<Method> Methods { get; set;} = new();
 
-        public bool GenerateDefaultConstructor { get; set; } = true;
-
         public void Accept(IVisitor visitor)
         {
             visitor.Visit(this);

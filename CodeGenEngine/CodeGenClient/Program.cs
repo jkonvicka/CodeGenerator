@@ -22,8 +22,6 @@ LanguageDeclaration CSharp = new LanguageDeclaration()
     ClassTemplate = "INCLUDES_DECLARATION\r\nNAMESPACE_DECLARATION\r\nCLASS_DECLARATION\r\n{\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPUBLIC_PROPERTIES_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\n}",
     PropertyInitializationTemplate = "this.NAME = NAME;"
 };
-
-
 LanguageDeclaration Java = new LanguageDeclaration()
 {
     IncludeTemplate = "import INCLUDE;",
@@ -43,8 +41,6 @@ LanguageDeclaration Java = new LanguageDeclaration()
     ClassTemplate = "INCLUDES_DECLARATION\r\nNAMESPACE_DECLARATION\r\nCLASS_DECLARATION\r\n{\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPUBLIC_PROPERTIES_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\n}",
     PropertyInitializationTemplate = "this.NAME = NAME;"
 };
-
-
 LanguageDeclaration Cpp = new LanguageDeclaration()
 {
     IncludeTemplate = "#include <INCLUDE>;",
@@ -64,7 +60,6 @@ LanguageDeclaration Cpp = new LanguageDeclaration()
     ClassTemplate = "INCLUDES_DECLARATION\r\n\r\nCLASS_DECLARATION \r\n{\r\nprivate:\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\npublic:\r\nPUBLIC_PROPERTIES_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\n}",
     PropertyInitializationTemplate = "this.NAME = NAME;"
 };
-
 LanguageDeclaration Python = new LanguageDeclaration()
 {
     IncludeTemplate = "import INCLUDE",
@@ -85,14 +80,13 @@ LanguageDeclaration Python = new LanguageDeclaration()
     PropertyInitializationTemplate = "self.NAME = NAME"
 };
 
-CodeGenerator generator = new CodeGenerator(Python);
+CodeGenerator generator = new CodeGenerator(CSharp);
 
 Class @class = new()
 {
     Name = "User",
     NameSpace = "DemoApplication",
     AccessOperator = AccessOperator.PUBLIC,
-    GenerateDefaultConstructor = false,
     Includes = new List<Include>()
                 {
                     new Include("System"),
@@ -119,4 +113,6 @@ Class @class = new()
                                                         )
     }
 };
-generator.Generate(@class);
+//Console.WriteLine(JsonConvert.SerializeObject(@class));
+var generatedCode = generator.Generate(@class);
+Console.WriteLine(generatedCode);
