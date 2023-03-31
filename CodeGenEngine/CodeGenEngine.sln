@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenRestAPI", "CodeGenRe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtModel", "ExtModel\ExtModel.csproj", "{5B81F4DC-C85E-4E70-BA48-7003AB952607}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converts", "Converts\Converts.csproj", "{55120581-AFB0-44EE-8795-2090B2EF8AF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{5B81F4DC-C85E-4E70-BA48-7003AB952607}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B81F4DC-C85E-4E70-BA48-7003AB952607}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B81F4DC-C85E-4E70-BA48-7003AB952607}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55120581-AFB0-44EE-8795-2090B2EF8AF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55120581-AFB0-44EE-8795-2090B2EF8AF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55120581-AFB0-44EE-8795-2090B2EF8AF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55120581-AFB0-44EE-8795-2090B2EF8AF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
