@@ -108,16 +108,13 @@ namespace CodeGenEngine
         {
             StringBuilder constructorSb = new StringBuilder();
 
-            if (c.GenerateDefaultConstructor)
-            {
-                // Default constructor
-                AddLine(constructorSb, UseTemplate(c, Declaration.DefaultConstructorDeclarationTemplate));
-                AddNewLine(constructorSb);
-                AddLine(constructorSb, $"{Declaration.OpenDefinitonBodyTemplate}");
-                AddNewLine(constructorSb);
-                AddLine(constructorSb, $"{Declaration.CloseDefinitonBodyTemplate}");
-                AddNewLine(constructorSb);
-            }
+            // Default constructor
+            AddLine(constructorSb, UseTemplate(c, Declaration.DefaultConstructorDeclarationTemplate));
+            AddNewLine(constructorSb);
+            AddLine(constructorSb, $"{Declaration.OpenDefinitonBodyTemplate}");
+            AddNewLine(constructorSb);
+            AddLine(constructorSb, $"{Declaration.CloseDefinitonBodyTemplate}");
+            AddNewLine(constructorSb);
 
             List<string> arguments = new();
             List<string> propertyInitialization = new();
