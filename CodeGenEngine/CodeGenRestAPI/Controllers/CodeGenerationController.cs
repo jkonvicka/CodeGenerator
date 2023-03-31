@@ -1,3 +1,8 @@
+using CodeGenEngine;
+using CodeGenRestAPI.Services.Language;
+using CodeGenRestAPI.WrapperModel;
+using Converts;
+using ExtModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeGenRestAPI.Controllers
@@ -7,10 +12,12 @@ namespace CodeGenRestAPI.Controllers
     public class CodeGeneratorController : ControllerBase
     {
         private readonly ILogger<CodeGeneratorController> _logger;
+        private readonly ILanguageDictionaryService _languageDictionaryService;
 
-        public CodeGeneratorController(ILogger<CodeGeneratorController> logger)
+        public CodeGeneratorController(ILogger<CodeGeneratorController> logger, ILanguageDictionaryService languageDictionaryService)
         {
             _logger = logger;
+            _languageDictionaryService = languageDictionaryService;
         }
 
         /// <summary>
@@ -18,9 +25,12 @@ namespace CodeGenRestAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost(Name = "GenerateClass")]
-        public string GenerateClass()
+        public string GenerateClass(GenerateClassModel generateClassModel)
         {
-            return string.Empty;
+            LanguageDeclaration languageDeclaration = _languageDictionaryService.GetLanguage(generateClassModel.Language);
+
+            CodeGenerator cg = new CodeGenerator(languageDeclaration);
+            return cg.Generate(generateClassModel.ClassSpecification.ConvertToInternal());
         }
     }
 }

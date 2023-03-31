@@ -113,5 +113,6 @@ Class @class = new()
                                                         )
     }
 };
+//Console.WriteLine(JsonConvert.SerializeObject(@class));
 var generatedCode = generator.Generate(@class);
 Console.WriteLine(generatedCode);
