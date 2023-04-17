@@ -51,7 +51,8 @@ function loadListIntoHtmlSelect(id, list){
     for (const _option of list) {
         //console.log(i + ' ' + _property.name);
         var option = document.createElement("option");
-        option.text = _option.name;
+        //console.log(_option.toString())
+        option.text = _option.toString();
         option.value = i;
         select.add(option);      
         i++;
@@ -127,11 +128,11 @@ export class ClassDiagram {
     removeNodeProperty(key, id){
         var data = this.diagram.model.findNodeDataForKey(key);
         if (data) {
-            this.diagram.model.startTransaction("modified property");
+            this.diagram.model.startTransaction("removed property");
             console.log(id);
             this.diagram.model.removeArrayItem(data.properties, id);
             // ... maybe modify other properties and/or other data objects
-            this.diagram.model.commitTransaction("modified property");
+            this.diagram.model.commitTransaction("removed property");
         }
     }
 
@@ -145,6 +146,16 @@ export class ClassDiagram {
         }
     }
 
+    removeNodeMethod(key, id){
+        var data = this.diagram.model.findNodeDataForKey(key);
+        if (data) {
+            this.diagram.model.startTransaction("removed method");
+            this.diagram.model.removeArrayItem(data.methods, id);
+            // ... maybe modify other properties and/or other data objects
+            this.diagram.model.commitTransaction("removed method");
+        }
+    }
+
     getData(key){
         var data = this.diagram.model.findNodeDataForKey(key);
         return data;
@@ -153,6 +164,64 @@ export class ClassDiagram {
     getJson(){
         var nodeData =  this.diagram.model.nodeDataArray;
         var linkData = this.diagram.model.linkDataArray;
+        
+        const classSpecifications = [];
+        nodeData.forEach(function(node) {
+            const classSpecification = {
+                Name: node.name,
+                NameSpace: "",
+                AccessOperator: 1,
+                Includes: [],
+                BaseClasses: [],
+                Properties: [],
+                Methods: []
+              };
+            // Parse properties
+            node.properties.forEach(property => {
+                const parsedProperty = {
+                AccessOperator: property.visibility === "public" ? 0 : 1,
+                GenerateGetter: true,
+                GenerateSetter: true,
+                Name: property.name,
+                DataType: { Key: property.type },
+                DefaultValue: property.default || ""
+                };
+
+                classSpecification.Properties.push(parsedProperty);
+            });
+
+            // Parse methods
+            node.methods.forEach(method => {
+                const parsedMethod = {
+                Name: method.name,
+                ReturnType: { Key: method.type },
+                AccessOperator: method.visibility === "public" ? 0 : 1,
+                Arguments: method.parameters.map(parameter => {
+                    return {
+                    Name: parameter.name,
+                    DataType: { Key: parameter.type },
+                    DefaultValue: parameter.default || ""
+                    };
+                })
+                };
+
+                classSpecification.Methods.push(parsedMethod);
+            });
+
+            // Parse properties
+            var generalizationLinks = linkData.filter(obj => obj.from === node.key && 
+                                                        obj.relationship === 'generalization');
+            generalizationLinks.forEach(link => {
+                const baseClass = {
+                    Name: nodeData.filter(obj => obj.key === link.to)[0].name || ""
+                };
+
+                classSpecification.BaseClasses.push(baseClass);
+            });
+
+            classSpecifications.push(classSpecification);
+          });
+        return classSpecifications;
     }
 
     getModel(){
@@ -316,10 +385,12 @@ export class ClassDiagram {
         if (!(part instanceof go.Link))
         {
             unloadListIntoHtmlSelect('selectedNodePropertyList');
+            unloadListIntoHtmlSelect('selectedNodeMethodList');
             selectedObject = part.data;
             loadListIntoHtmlSelect('selectedNodePropertyList', selectedObject.properties);
+            loadListIntoHtmlSelect('selectedNodeMethodList', selectedObject.methods);
             console.log('Selected object with key: ' + selectedObject.key);
-            console.log(selectedObject.methods);
+            //console.log(selectedObject.methods);
         }
         else{
         }

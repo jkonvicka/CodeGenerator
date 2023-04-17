@@ -5,4 +5,8 @@ export class NodeMethodParameter{
         this.name = name;
         this.type = type;
     }
+
+    toString(){
+        return this.name + " : " + this.type;
+    }
 }

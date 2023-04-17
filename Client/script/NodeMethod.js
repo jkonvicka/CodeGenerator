@@ -7,4 +7,9 @@ export class NodeMethod{
         this.visibility = visibility;
         this.parameters = parameters;
     }
+
+    //function returns a string of the method
+    toString(){
+        return this.visibility + " " + this.name + "(" + this.parameters.map(element=> element.toString()).join(', ') + ")" + " : " + this.type;
+    }
 }

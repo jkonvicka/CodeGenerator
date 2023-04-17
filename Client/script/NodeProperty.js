@@ -7,4 +7,8 @@ export class NodeProperty{
         this.visibility = visibility;
         this.default_value = default_value;
     }
+
+    toString(){
+        return this.visibility + " " + this.name + " : " + this.type;//+ " = " + this.default_value;
+    }
 }

@@ -7,11 +7,8 @@ var classDiagram = null;
 export function init(divID){
     classDiagram = new ClassDiagram(divID);
     classDiagram.render();
-    
-
 }
 
-init('diagramDiv');
 
 
 
@@ -61,6 +58,31 @@ document.getElementById("LoadLanguages").onclick = function(){
 document.getElementById("GenerateCode").onclick = function(){
     console.log("EXPORTING JSON");
     var diagramJson = classDiagram.getJson();
+
+    var languageSelector = document.getElementById('languageSelector');
+    var selectedLanguageId = languageSelector.options[languageSelector.selectedIndex].value;
+
+    var body = {
+            language: selectedLanguageId,
+            classSpecification: diagramJson
+          };
+    //console.log(diagramJson);
+    var url = document.getElementById("GeneratorUrl").value + 'CodeGenerator/GenerateClasses';
+    const xhr = new CodeGenHTTPClient();
+
+    xhr.send(url, body, 'POST', function(response) {
+      var responseObj = JSON.parse(response);
+      const zip = new JSZip();
+      
+      for (let i = 0; i < responseObj.length; i++) {
+        zip.file(responseObj[i].fileName, responseObj[i].code);
+      }
+
+      zip.generateAsync({ type: "blob" }).then(function (content) {
+        saveAs(content, "generatedCode.zip");
+      });
+	});
+
 };
 
 document.getElementById("AddProperty").onclick = function(){
@@ -162,24 +184,29 @@ document.getElementById("AddMethod").onclick = function(){
                                     'private' : 'public';
         var methodReturnTypeSelector = document.getElementById('methodReturnType');
         var methodReturnType = methodReturnTypeSelector.options[methodReturnTypeSelector.selectedIndex].value;
-        if (selectedObject.methods.some(e => e.name === methodName)) {
-            showMessage('This node already contains method with that name', true, 'alert-warning');
-            return;
-        }
+        
         
         // Get parameters from the form
         var parameters = [];
         var parameterNames = document.getElementsByName("parameterName");
         var parameterTypes = document.getElementsByName("parameterType");
-        console.log(parameterTypes);
+        //console.log(parameterTypes);
         //var parameterDefaults = document.getElementsByName("parameterDefault");
         for (var i = 0; i < parameterNames.length; i++) {
             var name = parameterNames[i].value;
             var type = parameterTypes[i].options[parameterTypes[i].selectedIndex].value;
             //var defaultValue = parameterDefaults[i].value;
+            if(name == null || name === ""){
+                showMessage('Parameter name is null or empty', true, 'alert-warning');
+                return;
+            }
             parameters.push({name: name, type: type});
         }
-        console.log(parameters);
+        
+        /*if (selectedObject.methods.some(e => e.name === methodName && e.parameters)) {
+            showMessage('This node already contains method with that name', true, 'alert-warning');
+            return;
+        }*/
         
         // Add the method to the class object
         classDiagram.addNodeMethod(selectedObject.key, 
@@ -196,6 +223,21 @@ document.getElementById("AddMethod").onclick = function(){
     }else{
         //showMessage('Please select node', false, 'alert-dark');
     }
+};
+
+document.getElementById("RemoveMethod").onclick = function(){
+    if(nodeSelectedInfo())
+    {
+        var methodListSelector = document.getElementById('selectedNodeMethodList');
+        var methodListSelectorId = methodListSelector.options[methodListSelector.selectedIndex].value;
+        classDiagram.removeNodeMethod(selectedObject.key, parseInt(methodListSelectorId));
+        reloadListIntoHtmlSelect('selectedNodeMethodList', selectedObject.methods);
+        console.log('Removed method');
+        showMessage('Method removed', false, 'alert-success');
+    }else{
+        //showMessage('Please select node', false, 'alert-dark');
+    }
+    
 };
 
 
