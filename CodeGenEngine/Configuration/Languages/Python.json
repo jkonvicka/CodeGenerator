@@ -15,5 +15,6 @@
    "ArgumentWithoutDefaultValueTemplate":"NAME : DATATYPE",
    "ArgumentWithDefaultValueTemplate":"NAME : DATATYPE = DEFAULTVALUE",
    "ClassTemplate":"INCLUDES_DECLARATION\r\nCLASS_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION",
-   "PropertyInitializationTemplate":"self.NAME = NAME"
+   "PropertyInitializationTemplate":"self.NAME = NAME",
+   "FileExtensionType":"python"
 }
