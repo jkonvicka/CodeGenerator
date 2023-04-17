@@ -11,6 +11,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<ILanguageDictionaryService, LanguageDictionaryService>();
 
+// Enable CORS
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -22,6 +24,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+// Use CORS
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseAuthorization();
 

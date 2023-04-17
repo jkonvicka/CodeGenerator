@@ -25,6 +25,7 @@ namespace CodeGenEngine
         public string ArgumentWithDefaultValueTemplate { get; set; } = string.Empty;
         public string ClassTemplate { get; set; } = string.Empty;
         public string PropertyInitializationTemplate { get; set; } = string.Empty;
+        public string FileExtensionType { get; set; } = string.Empty;
 
     }
 }

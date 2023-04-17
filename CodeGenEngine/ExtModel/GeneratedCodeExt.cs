@@ -8,7 +8,7 @@ namespace ExtModel
 {
     public class GeneratedCodeExt
     {
-        public string Language { get; set; }
+        public string FileName { get; set; }
         public string Code { get; set; }
     }
 }

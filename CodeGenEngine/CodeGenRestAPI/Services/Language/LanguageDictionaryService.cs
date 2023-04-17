@@ -22,6 +22,11 @@ namespace CodeGenRestAPI.Services.Language
             }
         }
 
+        public string[] GetAllKeys()
+        {
+            return _languageDictionary.Keys.ToArray();
+        }
+
         public LanguageDeclaration GetLanguage(string key)
         {
             if (!_languageDictionary.ContainsKey(key))

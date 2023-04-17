@@ -11,19 +11,7 @@ namespace CodeGenEngine
 {
     public class Language : IVisitor, ILanguage
     {
-        private Dictionary<string, string> ClassDeclaration { get; set; } = new Dictionary<string, string>()
-        {
-            {"INCLUDES_DECLARATION", string.Empty },
-            {"NAMESPACE_DECLARATION", string.Empty },
-            {"CLASS_DECLARATION", string.Empty },
-            {"PRIVATE_PROPERTIES_DECLARATION", string.Empty },
-            {"PRIVATE_METHODS_DECLARATION", string.Empty },
-            {"PUBLIC_PROPERTIES_DECLARATION", string.Empty },
-            {"DEFAULT_CONSTRUCTOR_DECLARATION", string.Empty },
-            {"PARAMETRIZED_CONSTRUCTOR_DECLARATION", string.Empty },
-            {"GETTERS_AND_SETTERS_DECLARATION", string.Empty },
-            {"PUBLIC_METHODS_DECLARATION", string.Empty },
-        };
+        private Dictionary<string, string> ClassDeclaration { get; set; }
 
         public LanguageDeclaration Declaration { get; set; }
 
@@ -38,6 +26,7 @@ namespace CodeGenEngine
 
         public string GetCode(Class @class)
         {
+            ResetTemplate();
             @class.Accept(this);
             string template = Declaration.ClassTemplate;
             foreach ((var keyword, var value) in ClassDeclaration)
@@ -292,6 +281,24 @@ namespace CodeGenEngine
         private void AddNewLine(StringBuilder sb)
         {
             sb.AppendLine("");
+        }
+
+        void ResetTemplate()
+        {
+            ClassDeclaration = new Dictionary<string, string>()
+            {
+                {"INCLUDES_DECLARATION", string.Empty },
+                {"NAMESPACE_DECLARATION", string.Empty },
+                {"CLASS_DECLARATION", string.Empty },
+                {"PRIVATE_PROPERTIES_DECLARATION", string.Empty },
+                {"PRIVATE_METHODS_DECLARATION", string.Empty },
+                {"PUBLIC_PROPERTIES_DECLARATION", string.Empty },
+                {"DEFAULT_CONSTRUCTOR_DECLARATION", string.Empty },
+                {"PARAMETRIZED_CONSTRUCTOR_DECLARATION", string.Empty },
+                {"GETTERS_AND_SETTERS_DECLARATION", string.Empty },
+                {"PUBLIC_METHODS_DECLARATION", string.Empty },
+            };
+            TabNum = 0;
         }
         #endregion
 
