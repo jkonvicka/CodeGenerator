@@ -7,8 +7,11 @@ var classDiagram = null;
 export function init(divID){
     classDiagram = new ClassDiagram(divID);
     classDiagram.render();
+    
+
 }
 
+init('diagramDiv');
 
 
 
@@ -58,31 +61,6 @@ document.getElementById("LoadLanguages").onclick = function(){
 document.getElementById("GenerateCode").onclick = function(){
     console.log("EXPORTING JSON");
     var diagramJson = classDiagram.getJson();
-
-    var languageSelector = document.getElementById('languageSelector');
-    var selectedLanguageId = languageSelector.options[languageSelector.selectedIndex].value;
-
-    var body = {
-            language: selectedLanguageId,
-            classSpecification: diagramJson
-          };
-    //console.log(diagramJson);
-    var url = document.getElementById("GeneratorUrl").value + 'CodeGenerator/GenerateClasses';
-    const xhr = new CodeGenHTTPClient();
-
-    xhr.send(url, body, 'POST', function(response) {
-      var responseObj = JSON.parse(response);
-      const zip = new JSZip();
-      
-      for (let i = 0; i < responseObj.length; i++) {
-        zip.file(responseObj[i].fileName, responseObj[i].code);
-      }
-
-      zip.generateAsync({ type: "blob" }).then(function (content) {
-        saveAs(content, "generatedCode.zip");
-      });
-	});
-
 };
 
 document.getElementById("AddProperty").onclick = function(){

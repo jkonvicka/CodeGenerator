@@ -153,64 +153,6 @@ export class ClassDiagram {
     getJson(){
         var nodeData =  this.diagram.model.nodeDataArray;
         var linkData = this.diagram.model.linkDataArray;
-        
-        const classSpecifications = [];
-        nodeData.forEach(function(node) {
-            const classSpecification = {
-                Name: node.name,
-                NameSpace: "",
-                AccessOperator: 1,
-                Includes: [],
-                BaseClasses: [],
-                Properties: [],
-                Methods: []
-              };
-            // Parse properties
-            node.properties.forEach(property => {
-                const parsedProperty = {
-                AccessOperator: property.visibility === "public" ? 0 : 1,
-                GenerateGetter: true,
-                GenerateSetter: true,
-                Name: property.name,
-                DataType: { Key: property.type },
-                DefaultValue: property.default || ""
-                };
-
-                classSpecification.Properties.push(parsedProperty);
-            });
-
-            // Parse methods
-            node.methods.forEach(method => {
-                const parsedMethod = {
-                Name: method.name,
-                ReturnType: { Key: method.type },
-                AccessOperator: method.visibility === "public" ? 0 : 1,
-                Arguments: method.parameters.map(parameter => {
-                    return {
-                    Name: parameter.name,
-                    DataType: { Key: parameter.type },
-                    DefaultValue: parameter.default || ""
-                    };
-                })
-                };
-
-                classSpecification.Methods.push(parsedMethod);
-            });
-
-            // Parse properties
-            var generalizationLinks = linkData.filter(obj => obj.from === node.key && 
-                                                        obj.relationship === 'generalization');
-            generalizationLinks.forEach(link => {
-                const baseClass = {
-                    Name: nodeData.filter(obj => obj.key === link.to)[0].name || ""
-                };
-
-                classSpecification.BaseClasses.push(baseClass);
-            });
-
-            classSpecifications.push(classSpecification);
-          });
-        return classSpecifications;
     }
 
     getModel(){
