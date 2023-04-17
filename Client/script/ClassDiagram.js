@@ -401,6 +401,7 @@ export class ClassDiagram {
             { 
                 selectedObject = null;
                 unloadListIntoHtmlSelect('selectedNodePropertyList');
+                unloadListIntoHtmlSelect('selectedNodeMethodList');
                 console.log('Deselected object');
             });
 

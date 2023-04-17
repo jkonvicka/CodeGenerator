@@ -20,4 +20,8 @@ export class Node{
     addMethod(name, type, visibility, parameters){
         this.methods.push(new NodeMethod(name, type, visibility, parameters));
     }
+
+    toString(){
+        return this.name;
+    } 
 }
