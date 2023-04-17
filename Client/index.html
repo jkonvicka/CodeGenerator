@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <link href="./css/includes/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+     
+      <link href="./css/style.css" rel="stylesheet">
+      <title>Diagramr</title>
+   </head>
+   <body onload="">
+      <button type="button" class="btn btn-primary" id="ToggleNode">Toggle Node Management</button>
+      <button type="button" class="btn btn-primary" id="ToggleLinking">Toggle Linking Management</button>
+      <button type="button" class="btn btn-primary" id="ToggleProperty">Toggle Property Management</button>
+      <button type="button" class="btn btn-primary" id="ToggleMethod">Toggle Method Management</button>
+      <div class="container">
+         <div class="error-container" id="error-container-div">
+         </div>
+      </div>
+      <div class="container text-center">
+         <div class="row">
+            <div class="col">
+               <form class="text-center">
+                  <label for="GeneratorUrl" class="col-sm-2 col-form-label">Generator URL</label>
+                  <input type="text" class="form-control text-center" id="GeneratorUrl" value="https://localhost:7171/">
+                  <button type="button" class="btn btn-primary" id="LoadLanguages">Load Languages</button>
+                  <select class="form-select" id="languageSelector">
+                  </select>
+                  <button type="button" class="btn btn-primary" id="GenerateCode" disabled>GenerateCode</button>
+               </form>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col">
+               <div id="diagramDiv"></div>
+            </div>
+         </div>
+         <div class="row" id="linkingManagement">
+            <form class="text-center">
+               <div class="row">
+                  <div class="col">
+                     <select class="form-select" id="classesFrom">
+                     </select>
+                  </div>
+                  <div class="col">
+                     <select class="form-select" id="relations">
+                        <option value="association">Association</option>
+                        <option value="aggregation">Aggregation</option>
+                        <option value="composition">Composition</option>
+                        <option value="generalization">Generalization</option>
+                     </select>
+                  </div>
+                  <div class="col">
+                     <select class="form-select" id="classesTo">
+                     </select>
+                  </div>
+                  <div class="col">
+                     <button type="button" class="btn btn-primary" id="AddLink">AddLink</button>
+                  </div>
+               </div>
+            </form>
+         </div>
+         <div class="row">
+            <div class="col">
+            </div>
+         </div>
+         <div class="row" id="nodeManagement">
+            <div class="col">
+               <button type="button" class="btn btn-primary" id="AddNode">AddNode</button>
+               <form class="text-center">
+                  <div class="row justify-content-center">
+                     <div class="col-sm-10">
+                        <label for="className" class="col-sm-2 col-form-label">Name</label>
+                        <input type="text" class="form-control text-center" id="className" value="">
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+         <div class="row" id="properyManagement">
+            <div class="col">
+               <button type="button" class="btn btn-primary" id="AddProperty">AddProperty</button>
+               <form class="text-center">
+                  <div class="row justify-content-center">
+                     <div class="col-sm-10">
+                        <label for="propertyName" class="col-sm-2 col-form-label">Name</label>
+                        <input type="text" class="form-control text-center" id="propertyName" value="">
+                     </div>
+                  </div>
+                  <div class="row justify-content-center">
+                     <div class="col-sm-10">
+                        <label for="propertyVisibility" class="col-sm-2 col-form-label">Visibility</label>
+                        <div class="form-check">
+                           <input class="form-check-input" type="radio" name="flexRadioProperty" id="flexRadioPropertyPrivate">
+                           <label class="form-check-label" for="flexRadioPropertyPrivate1">
+                           Private
+                           </label>
+                        </div>
+                        <div class="form-check">
+                           <input class="form-check-input" type="radio" name="flexRadioProperty" id="flexRadioPropertyPublic" checked>
+                           <label class="form-check-label" for="flexRadioPropertyPublic">
+                           Public
+                           </label>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row justify-content-center">
+                     <select class="form-select" aria-label="Default select example" id="propertyDataType">
+                        <option value="bool">Bool</option>
+                        <option selected value="string">String</option>
+                        <option value="int">Int</option>
+                     </select>
+                  </div>
+                  <div class="row justify-content-center">
+                     <div class="col-sm-10">
+                        <label for="propertyDefault" class="col-sm-2 col-form-label">Default</label>
+                        <input type="text" class="form-control" id="propertyDefault" value="">
+                     </div>
+                  </div>
+               </form>
+            </div>
+            <div class="col">
+               <button type="button" class="btn btn-primary" id="RemoveProperty">RemoveProperty</button>
+               <div class="row justify-content-center">
+                  <select class="form-select" id="selectedNodePropertyList">
+                  </select>
+               </div>
+            </div>
+            <div class="col">
+               <button type="button" class="btn btn-primary" id="ShowProperties">ShowProperties</button>
+            </div>
+         </div>
+         <div class="row" id="methodManagement">
+            <div class="col">
+               <div class="form-group">
+                  <label for="methodName">Method Name:</label>
+                  <input type="text" class="form-control" id="methodName" placeholder="Enter method name">
+              </div>
+              <div class="form-group">
+                  <label for="methodVisibility">Visibility:</label>
+                  <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="methodVisibility" id="flexRadioMethodPublic" value="public" checked>
+                      <label class="form-check-label" for="flexRadioMethodPublic">Public</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="methodVisibility" id="flexRadioMethodPrivate" value="private">
+                      <label class="form-check-label" for="flexRadioMethodPrivate">Private</label>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="methodReturnType">Return Type:</label>
+                  <select class="form-control" id="methodReturnType">
+                      <option value="void">void</option>
+                      <option value="int">int</option>
+                      <option value="double">double</option>
+                      <option value="String">String</option>
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="methodParameters">Parameters:</label>
+                  <div id="methodParameters">
+                      
+                  </div>
+                  <button type="button" class="btn btn-success" onclick="addParameter()">Add Parameter</button>
+              </div>
+              <button type="button" class="btn btn-primary" id="AddMethod">Add Method</button>
+              
+            </div>
+         </div>
+      </div>
+   </body>
+</html>
+<script src="./script/includes/go-debug.js"></script>
+<!-- JavaScript Bundle with Popper -->
+<script src="./script/includes/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<script src="./script/includes/FileSaver.js"></script>
+<script src="./script/includes/jszip.js" type="text/javascript"></script>
+<script type="module" src="./script/index.js"></script>
+
+<script>
+   function addParameter() {
+      var parametersDiv = document.getElementById('methodParameters');
+      var newParameterDiv = document.createElement('div');
+      newParameterDiv.className = 'form-group row';
+    
+      var nameInput = document.createElement('input');
+      nameInput.type = 'text';
+      nameInput.name = 'parameterName';
+      nameInput.className = 'col-4 form-control';
+      nameInput.placeholder = 'Parameter name';
+    
+      var typeSelect = document.createElement('select');
+      typeSelect.className = 'col-4 form-control';
+      typeSelect.name = 'parameterType';
+      var option1 = document.createElement('option');
+      option1.value = 'int';
+      option1.text = 'int';
+      var option2 = document.createElement('option');
+      option2.value = 'string';
+      option2.text = 'string';
+      var option3 = document.createElement('option');
+      option3.value = 'boolean';
+      option3.text = 'boolean';
+      typeSelect.appendChild(option1);
+      typeSelect.appendChild(option2);
+      typeSelect.appendChild(option3);
+    
+      var deleteButton = document.createElement('button');
+      deleteButton.type = 'button';
+      deleteButton.className = 'btn btn-danger col-1';
+      deleteButton.innerHTML = '<i class="fa fa-trash">Remove</i>';
+      deleteButton.onclick = function() {
+        newParameterDiv.remove();
+      };
+    
+      newParameterDiv.appendChild(nameInput);
+      newParameterDiv.appendChild(typeSelect);
+      newParameterDiv.appendChild(deleteButton);
+      parametersDiv.appendChild(newParameterDiv);
+    }
+    
+ </script>
