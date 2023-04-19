@@ -10,8 +10,8 @@ namespace CodeGenRestAPI.Services.Language
 
         public LanguageDictionaryService()
         {
-            string rootPath = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
-            var languagesDirectory = Path.Combine(rootPath, "Configuration\\Languages\\");
+            string rootPath = Directory.GetCurrentDirectory();
+            var languagesDirectory = Path.Combine(rootPath, "Configuration/Languages/");
             string[] fileEntries = Directory.GetFiles(languagesDirectory, "*.json");
 
             foreach (string filePath in fileEntries)
