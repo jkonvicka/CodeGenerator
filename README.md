@@ -1,37 +1,15 @@
 # CodeGenerator
 Code generator with optional transformation rules
 
-## Semestral project specification
-The goal of the project is to create a web tool for generating code from class diagrams. The tool will allow generation into different languages e.g. JAVA, C#. It will be possible to add a new language by defining transformation rules. Also for one language the possibility of defining multiple options or on e.g. a specific constraint or part of the model. The expected output of the project is:
+## Project specification
+The purpose of this project is to design and implement a tool for generating object code from class diagrams, creating an interface, and setting up transformation rules for converting the diagram into several languages. The tool will allow the user to add transformation rules to any language for generation purposes.
 
-1. Functional source code in Java, C#, ...
-2. Text part (10-20 pages)
-3. Presentation for about 10 minutes
-4. Data for experiments
+## Deployment
 
+To deploy the system, you will need Docker installed on your machine. You can simply run `docker-compose up` or `docker-compose up --build` (to initiate build) to run the entire system at the root directory of your project.
 
-### Contents of the text part
-1. Introduction to the problem
-2. State of the art
-3. Detailed description of the selected part and its integration into the tool.
-4. Experiments, evaluation (tables and graphs can be used)
-5. Conclusion - evaluation of results
+- **Client application URL:** `localhost/Client` (port 80)
+- **Server URL:** `localhost:5000`
+- **Swagger Documentation:** `localhost:5000/swagger`
 
-### Besides the main part, the work will also include familiarization and active use of e.g.
-1. Java platform with Eclipse environment.
-2. Management using the GIT versioning system.
-3. Testing - according to the V model.
-4. Code quality measurement - using Sonar Qube, ...
-5. Task management using MANTIS.
-6. Linking contributions to the versioning system ("commits") with tasks.
-7. Reporting time worked on tasks.
-8. Ensuring traceability.
-
-### Docker-compose
-You can simply run docker-compose up to run whole system at root directory of the project.
-
-Client application url: localhost/Client (port 80)
-
-Server url: localhost:5000
-
-localhost:5000/swagger
+Using Docker-compose, you can easily manage the deployment of your project and ensure that all the necessary components are running smoothly together. This allows you to conveniently access the client application, server, and API documentation in your local environment for testing and development purposes.
