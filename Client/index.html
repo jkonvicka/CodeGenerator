@@ -2,7 +2,6 @@
 <html>
    <head>
       <link href="./css/includes/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-     
       <link href="./css/style.css" rel="stylesheet">
       <title>Diagramr</title>
    </head>
@@ -24,6 +23,14 @@
                   <button type="button" class="btn btn-primary" id="LoadLanguages">Load Languages</button>
                   <select class="form-select" id="languageSelector">
                   </select>
+                  <br>
+                  <button type="button" class="btn btn-primary" id="Import">Import configuration</button>
+                  <button type="button" class="btn btn-primary" id="Export">Export configuration</button>
+                  <br>
+                  <br>
+                  <button type="button" class="btn btn-primary" id="ExportSVG">Export SGV diagram</button>
+                  <br>
+                  <br>
                   <button type="button" class="btn btn-primary" id="GenerateCode" disabled>GenerateCode</button>
                </form>
             </div>
@@ -104,9 +111,10 @@
                   </div>
                   <div class="row justify-content-center">
                      <select class="form-select" aria-label="Default select example" id="propertyDataType">
-                        <option value="bool">Bool</option>
-                        <option selected value="string">String</option>
-                        <option value="int">Int</option>
+                        <option value="bool">bool</option>
+                        <option selected value="string">string</option>
+                        <option value="int">int</option>
+                        <option value="double">double</option>
                      </select>
                   </div>
                   <div class="row justify-content-center">
@@ -133,36 +141,34 @@
                <div class="form-group">
                   <label for="methodName">Method Name:</label>
                   <input type="text" class="form-control" id="methodName" placeholder="Enter method name">
-              </div>
-              <div class="form-group">
+               </div>
+               <div class="form-group">
                   <label for="methodVisibility">Visibility:</label>
                   <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="methodVisibility" id="flexRadioMethodPublic" value="public" checked>
-                      <label class="form-check-label" for="flexRadioMethodPublic">Public</label>
+                     <input class="form-check-input" type="radio" name="methodVisibility" id="flexRadioMethodPublic" value="public" checked>
+                     <label class="form-check-label" for="flexRadioMethodPublic">Public</label>
                   </div>
                   <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="methodVisibility" id="flexRadioMethodPrivate" value="private">
-                      <label class="form-check-label" for="flexRadioMethodPrivate">Private</label>
+                     <input class="form-check-input" type="radio" name="methodVisibility" id="flexRadioMethodPrivate" value="private">
+                     <label class="form-check-label" for="flexRadioMethodPrivate">Private</label>
                   </div>
-              </div>
-              <div class="form-group">
+               </div>
+               <div class="form-group">
                   <label for="methodReturnType">Return Type:</label>
                   <select class="form-control" id="methodReturnType">
-                      <option value="void">void</option>
-                      <option value="int">int</option>
-                      <option value="double">double</option>
-                      <option value="String">String</option>
+                     <option value="bool">bool</option>
+                     <option selected value="string">string</option>
+                     <option value="int">int</option>
+                     <option value="double">double</option>
                   </select>
-              </div>
-              <div class="form-group">
+               </div>
+               <div class="form-group">
                   <label for="methodParameters">Parameters:</label>
                   <div id="methodParameters">
-                      
                   </div>
                   <button type="button" class="btn btn-success" onclick="addParameter()">Add Parameter</button>
-              </div>
-              <button type="button" class="btn btn-primary" id="AddMethod">Add Method</button>
-              
+               </div>
+               <button type="button" class="btn btn-primary" id="AddMethod">Add Method</button>
             </div>
             <div class="col">
                <button type="button" class="btn btn-primary" id="RemoveMethod">RemoveMethod</button>
@@ -181,7 +187,6 @@
 <script src="./script/includes/FileSaver.js"></script>
 <script src="./script/includes/jszip.js" type="text/javascript"></script>
 <script type="module" src="./script/index.js"></script>
-
 <script>
    function addParameter() {
       var parametersDiv = document.getElementById('methodParameters');
@@ -197,18 +202,27 @@
       var typeSelect = document.createElement('select');
       typeSelect.className = 'col-4 form-control';
       typeSelect.name = 'parameterType';
+
       var option1 = document.createElement('option');
-      option1.value = 'int';
-      option1.text = 'int';
+      option1.value = 'bool';
+      option1.text = 'bool';
+
       var option2 = document.createElement('option');
       option2.value = 'string';
       option2.text = 'string';
+
       var option3 = document.createElement('option');
-      option3.value = 'boolean';
-      option3.text = 'boolean';
+      option3.value = 'int';
+      option3.text = 'int';
+
+      var option4 = document.createElement('option');
+      option4.value = 'double';
+      option4.text = 'double';
+      
       typeSelect.appendChild(option1);
       typeSelect.appendChild(option2);
       typeSelect.appendChild(option3);
+      typeSelect.appendChild(option4);
     
       var deleteButton = document.createElement('button');
       deleteButton.type = 'button';
@@ -224,4 +238,4 @@
       parametersDiv.appendChild(newParameterDiv);
     }
     
- </script>
+</script>

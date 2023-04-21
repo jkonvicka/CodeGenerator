@@ -1,5 +1,8 @@
 import { ClassDiagram, selectedObject, reloadListIntoHtmlSelect } from './ClassDiagram.js';
 import { CodeGenHTTPClient } from './HTTPClient/CodeGenHTTPClient.js';
+import { NodeProperty } from './NodeProperty.js';
+import { NodeMethod } from './NodeMethod.js';
+import { NodeMethodParameter } from './NodeMethodParameter.js';
 
 
 var classDiagram = null;
@@ -7,20 +10,6 @@ var classDiagram = null;
 export function init(divID){
     classDiagram = new ClassDiagram(divID);
     classDiagram.render();
-}
-
-
-
-
-function flash(model) {
-    alert(model);
-    var data = model.findNodeDataForKey(selectedObject.key);
-    if (data) {
-        model.startTransaction("modified property");
-        model.set(data, "name", 'hello');
-        // ... maybe modify other properties and/or other data objects
-        model.commitTransaction("modified property");
-    }
 }
 
 function nodeSelectedInfo()
@@ -35,15 +24,14 @@ function nodeSelectedInfo()
 }
 
 
-
 //HOOKS 
 document.getElementById("LoadLanguages").onclick = function(){
     const xhr = new CodeGenHTTPClient();
     const url = document.getElementById("GeneratorUrl").value + 'LanguageManagement/GetLanguages';
     xhr.send(url, '', 'GET', function(response) {
       var responseObj = JSON.parse(response);
+      document.getElementById("languageSelector").innerHTML = '';
       for(var i = 0; i < responseObj.length; i++){
-      
         var option = document.createElement("option");
         option.text = responseObj[i];
         option.value = responseObj[i];
@@ -54,6 +42,70 @@ document.getElementById("LoadLanguages").onclick = function(){
 	});
     
 }
+
+document.getElementById("Import").onclick = function(){
+    let input = document.createElement("input");
+    input.type = "file";
+    input.accept = "application/json";
+    input.style.display = "none";
+    document.body.appendChild(input);
+    
+    input.onchange = function() {
+        let file = input.files[0];
+        let reader = new FileReader();
+        
+        reader.onload = function(event) {
+        let json = event.target.result;
+        let data = JSON.parse(json);
+
+        // Render the diagram with the imported data
+        classDiagram.import(data.nodedata, data.linkdata);
+        };
+        
+        reader.readAsText(file);
+        document.body.removeChild(input);
+    };
+    
+    input.click();
+}
+
+document.getElementById("Export").onclick = function(){
+    let json = classDiagram.export();
+    var fileToSave = new Blob([json], {
+        type: 'application/json'
+    });
+    saveAs(fileToSave, "codeDiagram.json");
+}
+
+document.getElementById("ExportSVG").onclick = function(){
+    var svg = classDiagram.diagram.makeSvg({ scale: 1, background: "white" });
+    var svgstr = new XMLSerializer().serializeToString(svg);
+    var blob = new Blob([svgstr], { type: "image/svg+xml" });
+    downloadSVGCallback(blob);
+}
+
+function downloadSVGCallback(blob) {
+    var url = window.URL.createObjectURL(blob);
+    var filename = "mySVGFile.svg";
+
+    var a = document.createElement("a");
+    a.style = "display: none";
+    a.href = url;
+    a.download = filename;
+
+    // IE 11
+    if (window.navigator.msSaveBlob !== undefined) {
+      window.navigator.msSaveBlob(blob, filename);
+      return;
+    }
+
+    document.body.appendChild(a);
+    requestAnimationFrame(() => {
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    });
+  }
 
 document.getElementById("GenerateCode").onclick = function(){
     console.log("EXPORTING JSON");
@@ -103,12 +155,7 @@ document.getElementById("AddProperty").onclick = function(){
             return;
         }
         classDiagram.addNodeProperty(selectedObject.key, 
-            { 
-                name: propertyName,
-                type: propertyDataType,
-                visibility: propertyVisibility,
-                default: propertyDefault
-            });
+            new NodeProperty(propertyName,propertyDataType,propertyVisibility,propertyDefault));
         reloadListIntoHtmlSelect('selectedNodePropertyList', selectedObject.properties);
         console.log('Added property')
         showMessage('Property added', false, 'alert-success');
@@ -200,7 +247,7 @@ document.getElementById("AddMethod").onclick = function(){
                 showMessage('Parameter name is null or empty', true, 'alert-warning');
                 return;
             }
-            parameters.push({name: name, type: type});
+            parameters.push(new NodeMethodParameter(name, type));
         }
         
         /*if (selectedObject.methods.some(e => e.name === methodName && e.parameters)) {
@@ -210,12 +257,7 @@ document.getElementById("AddMethod").onclick = function(){
         
         // Add the method to the class object
         classDiagram.addNodeMethod(selectedObject.key, 
-            { 
-                name: methodName,
-                type: methodReturnType,
-                visibility: methodVisibility,
-                parameters: parameters
-            });
+            new NodeMethod(methodName,methodReturnType,methodVisibility,parameters));
         console.log(selectedObject);
         reloadListIntoHtmlSelect('selectedNodeMethodList', selectedObject.methods);
         console.log('Added method');
