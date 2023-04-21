@@ -11,37 +11,10 @@ let diagram = null;
 
 export var selectedObject = null;
 
-/*
-{
-    key: 1,
-    name: "BankAccount",
-    properties: [
-        { name: "owner", type: "String", visibility: "public" },
-        { name: "balance", type: "Currency", visibility: "private", default: "0" }
-    ],
-    methods: [
-        { name: "deposit", parameters: [{ name: "amount", type: "Currency" }], visibility: "public" },
-        { name: "withdraw", parameters: [{ name: "amount", type: "Currency" }], visibility: "public" }
-    ]
-    }
 
-*/
+var nodedata = [];
 
-var bankAccNode = new Node(1, 'BankAccount');
-bankAccNode.addProperty('owner', 'string', 'public');
-bankAccNode.addMethod('deposit', 'void', 'public', [new NodeMethodParameter('amount', 'currency')]);
-
-var hello = new Node(2, 'hello');
-
-var nodedata = [
-    bankAccNode,
-    hello
-    
-];
-
-var linkdata = [
-    //{ from: 1, to: 2, relationship: "aggregation" },
-];
+var linkdata = [];
 
 // HTML MANIPULATOR FUNCTIONS
 function loadListIntoHtmlSelect(id, list){
@@ -51,7 +24,6 @@ function loadListIntoHtmlSelect(id, list){
     for (const _option of list) {
         //console.log(i + ' ' + _property.name);
         var option = document.createElement("option");
-        //console.log(_option.toString())
         option.text = _option.toString();
         option.value = i;
         select.add(option);      
@@ -74,6 +46,15 @@ export class ClassDiagram {
     constructor(divID) {
         this.diagram = null;
         this.divID = divID;
+    }
+
+    import(_nodedata, _linkdata){
+        this.diagram.model = new go.GraphLinksModel(_nodedata, _linkdata);
+    }
+
+    export(){
+        let data = {nodedata, linkdata};
+        return JSON.stringify(data, undefined, 2);//prettyprint
     }
 
     addLink(from, to, relationship){
