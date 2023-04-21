@@ -27,3 +27,11 @@ The goal of the project is to create a web tool for generating code from class d
 7. Reporting time worked on tasks.
 8. Ensuring traceability.
 
+### Docker-compose
+You can simply run docker-compose up to run whole system at root directory of the project.
+
+Client application url: localhost/Client (port 80)
+
+Server url: localhost:5000
+
+localhost:5000/swagger
