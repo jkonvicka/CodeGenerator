@@ -1,6 +1,7 @@
 import { Converts } from './Converts.js';
 import { Node } from './Node.js';
 import { NodeProperty } from "./NodeProperty.js";
+import { NodeMethod} from "./NodeMethod.js";
 import { NodeMethodParameter } from "./NodeMethodParameter.js";
 
 var $ = go.GraphObject.make;
@@ -49,15 +50,41 @@ export class ClassDiagram {
     }
 
     import(_nodedata, _linkdata){
-        this.diagram.model = new go.GraphLinksModel(_nodedata, _linkdata);
+        //nodes
+        for(let i = 0; i < _nodedata.length; i++){
+            this.addNode(_nodedata[i].name);
+            for(let j = 0; j < _nodedata[i].properties.length; j++){
+                let prop = new NodeProperty(_nodedata[i].properties[j].name, 
+                    _nodedata[i].properties[j].type, 
+                    _nodedata[i].properties[j].visibility, 
+                    _nodedata[i].properties[j].default_value);
+                this.addNodeProperty(_nodedata[i].key, prop);
+            }
+            for(let j = 0; j < _nodedata[i].methods.length; j++){
+                let method = new NodeMethod(_nodedata[i].methods[j].name, 
+                    _nodedata[i].methods[j].type, 
+                    _nodedata[i].methods[j].visibility, 
+                    _nodedata[i].methods[j].parameters.map(x=>new NodeMethodParameter(x.name, x.type)));
+                this.addNodeMethod(_nodedata[i].key, method);
+            }
+        }
+        //links
+        for(let i = 0; i < _linkdata.length; i++){
+            this.addLink(_linkdata[i].from, _linkdata[i].to, _linkdata[i].relationship, true);
+        }
     }
 
-    export(){
-        let data = {nodedata, linkdata};
-        return JSON.stringify(data, undefined, 2);//prettyprint
+    exportNodeData(){
+        let nodedata =  this.diagram.model.nodeDataArray;
+        return nodedata;
     }
 
-    addLink(from, to, relationship){
+    exportLinkData(){
+        let linkdata = this.diagram.model.linkDataArray;
+        return linkdata;
+    }
+
+    addLink(from, to, relationship, importing = false){
         this.diagram.model.startTransaction("add link");
         var link = {from, to, relationship};
         console.log('Adding link');
@@ -66,23 +93,24 @@ export class ClassDiagram {
         
         
         // add property
-        if(relationship === 'aggregation' || relationship === 'composition')
-        {
-            this.addNodeProperty(from, { 
-                name: '_' + this.getData(to).name.toLowerCase() + 'Array',
-                type: this.getData(to).name + '[]',
-                visibility: 'private'
-            })
-        }else if(relationship === 'association')
-        {
-            this.addNodeProperty(from, { 
-                name: this.getData(to).name.toLowerCase(),
-                type: this.getData(to).name,
-                visibility: 'private'
-            })
+        if(!importing){
+            if(relationship === 'aggregation' || relationship === 'composition')
+            {
+                this.addNodeProperty(from, { 
+                    name: '_' + this.getData(to).name.toLowerCase() + 'Array',
+                    type: this.getData(to).name + '[]',
+                    visibility: 'private'
+                })
+            }else if(relationship === 'association')
+            {
+                this.addNodeProperty(from, { 
+                    name: this.getData(to).name.toLowerCase(),
+                    type: this.getData(to).name,
+                    visibility: 'private'
+                })
+            }
         }
 
-        
         this.diagram.model.commitTransaction("add link");
     }
 
@@ -142,7 +170,7 @@ export class ClassDiagram {
         return data;
     }
 
-    getJson(){
+    getCodeGenSpecification(namespace, includes){
         var nodeData =  this.diagram.model.nodeDataArray;
         var linkData = this.diagram.model.linkDataArray;
         
@@ -150,9 +178,9 @@ export class ClassDiagram {
         nodeData.forEach(function(node) {
             const classSpecification = {
                 Name: node.name,
-                NameSpace: "",
+                NameSpace: namespace,
                 AccessOperator: 1,
-                Includes: [],
+                Includes: includes,
                 BaseClasses: [],
                 Properties: [],
                 Methods: []
