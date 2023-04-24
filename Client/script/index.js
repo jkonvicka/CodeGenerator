@@ -58,6 +58,9 @@ document.getElementById("Import").onclick = function(){
         let json = event.target.result;
         let data = JSON.parse(json);
 
+        data.includes.forEach(include => addIncludeField(include.name));
+
+        document.getElementById("namespaceField").value = data.namespace;
         // Render the diagram with the imported data
         classDiagram.import(data.nodedata, data.linkdata);
         };
@@ -70,7 +73,13 @@ document.getElementById("Import").onclick = function(){
 }
 
 document.getElementById("Export").onclick = function(){
-    let json = classDiagram.export();
+    let includes = Array.from(document.getElementsByClassName("includeFieldInput")).map(x => ({ name: x.value }));
+    let namespace = document.getElementById("namespaceField").value;
+    let nodedata = classDiagram.exportNodeData();
+    let linkdata = classDiagram.exportLinkData();
+    let data = {namespace, includes, nodedata, linkdata};
+    let json = JSON.stringify(data, null, 2);
+
     var fileToSave = new Blob([json], {
         type: 'application/json'
     });
@@ -109,7 +118,9 @@ function downloadSVGCallback(blob) {
 
 document.getElementById("GenerateCode").onclick = function(){
     console.log("EXPORTING JSON");
-    var diagramJson = classDiagram.getJson();
+    let includes = Array.from(document.getElementsByClassName("includeFieldInput")).map(x => ({ name: x.value }));
+    let namespace = document.getElementById("namespaceField").value;
+    var diagramJson = classDiagram.getCodeGenSpecification(namespace, includes);
 
     var languageSelector = document.getElementById('languageSelector');
     var selectedLanguageId = languageSelector.options[languageSelector.selectedIndex].value;
@@ -283,7 +294,9 @@ document.getElementById("RemoveMethod").onclick = function(){
 };
 
 
-
+document.getElementById("ToggleGlobal").onclick = function(){
+    toggleHideDisplay('globalManagement');
+};
 
 document.getElementById("ToggleLinking").onclick = function(){
     toggleHideDisplay('linkingManagement');
@@ -302,7 +315,7 @@ document.getElementById("ToggleNode").onclick = function(){
 };
 
 
-const toggleStrings = ['linkingManagement', 'properyManagement', 'methodManagement', 'nodeManagement'];
+const toggleStrings = ['globalManagement', 'linkingManagement', 'properyManagement', 'methodManagement', 'nodeManagement'];
 
 function toggleHideDisplay(elementId){
     for (let i = 0; i < toggleStrings.length; i++) {

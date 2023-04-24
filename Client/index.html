@@ -6,6 +6,7 @@
       <title>Diagramr</title>
    </head>
    <body onload="">
+      <button type="button" class="btn btn-primary" id="ToggleGlobal">Toggle Global Management</button>
       <button type="button" class="btn btn-primary" id="ToggleNode">Toggle Node Management</button>
       <button type="button" class="btn btn-primary" id="ToggleLinking">Toggle Linking Management</button>
       <button type="button" class="btn btn-primary" id="ToggleProperty">Toggle Property Management</button>
@@ -67,6 +68,17 @@
          </div>
          <div class="row">
             <div class="col">
+            </div>
+         </div>
+         <div class="row" id="globalManagement">
+            <div class="col">
+               <form id="text-center">
+                  <label for="namespaceField" class="col-sm-2 col-form-label">Namespace</label>
+                        <input type="text" class="form-control text-center" id="namespaceField" value="CodeGen">
+                  <div id="includeFieldsContainer">
+                  </div>
+                  <button type="button" class="btn btn-primary"  onclick="addIncludeField()">Add Include</button>
+              </form>
             </div>
          </div>
          <div class="row" id="nodeManagement">
@@ -237,5 +249,23 @@
       newParameterDiv.appendChild(deleteButton);
       parametersDiv.appendChild(newParameterDiv);
     }
+
+    function addIncludeField(value='') {
+      var includeFieldsContainer = document.getElementById('includeFieldsContainer');
+      var newIncludeField = document.createElement('div');
+      newIncludeField.className = 'includeField';
+      newIncludeField.innerHTML = '<input type="text" class="includeFieldInput" name="includeField" placeholder="" value=' + value + '>';
+
+      var deleteButton = document.createElement('button');
+      deleteButton.type = 'button';
+      deleteButton.className = 'btn btn-danger col-1';
+      deleteButton.innerHTML = '<i class="fa fa-trash">Remove</i>';
+      deleteButton.onclick = function() {
+         newIncludeField.remove();
+      };
+      newIncludeField.appendChild(deleteButton);
+
+      includeFieldsContainer.appendChild(newIncludeField);
+  }
     
 </script>
