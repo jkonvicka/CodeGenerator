@@ -1,5 +1,5 @@
 {
-   "IncludeTemplate":"#include <INCLUDE>;",
+   "IncludeTemplate":"#include <INCLUDE>",
    "NamespaceTemplate":"",
    "ClassDeclarationWithoutBaseClassTemplate":"class CLASSNAME",
    "ClassDeclarationWithBaseClassTemplate":"class CLASSNAME : <BASECLASES>",
