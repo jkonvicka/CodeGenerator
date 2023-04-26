@@ -8,8 +8,8 @@ The purpose of this project is to design and implement a tool for generating obj
 
 To deploy the system, you will need Docker installed on your machine. You can simply run `docker-compose up` or `docker-compose up --build` (to initiate build) to run the entire system at the root directory of your project.
 
-- **Client application URL:** `localhost/Client` (port 80)
+- **Client application URL:** `http://localhost/Client` (port 80)
 - **Server URL:** `localhost:5000`
-- **Swagger Documentation:** `localhost:5000/swagger`
+- **Swagger Documentation:** `http://localhost:5000/swagger/index.html`
 
 Using Docker-compose, you can easily manage the deployment of your project and ensure that all the necessary components are running smoothly together. This allows you to conveniently access the client application, server, and API documentation in your local environment for testing and development purposes.
