@@ -1,5 +1,5 @@
 #diagramDiv{
-    width:90%; 
+    width:100%; 
     height:500px; 
     background-color: #DAE4E4;
     margin: auto;
@@ -13,4 +13,98 @@
     position:absolute;
     top:10px;
     right:20px;
+}
+
+.rightSide{
+    width: 350px;
+    padding: 20px;
+    float: left;
+    text-align: center;
+    background: #e2f2ff;
+}
+
+.rightSide button{
+    width: 300px;
+    margin: 5px;
+}
+
+.rightSide .row{
+    background: #ffffff;
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: 0px 0px 14px -8px;
+    height: 500px
+}
+
+.text-center button{
+    width: 200px;
+}
+
+.row>* {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin-top: 0;
+}
+
+.leftSide .row{
+    padding: 0;
+}
+
+#globalManagement, #linkingManagement, #nodeManagement, #properyManagement, #methodManagement {
+    display: block;
+    width: 700px;
+    float: left;
+    background: #f6f6ff;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#globalManagement button, #nodeManagement button, #properyManagement button, #methodManagemen button{
+margin-top: 10px;
+}
+
+#linkingManagement button{
+    margin-left: 10px;
+}
+ .col-form-label{
+    float: left;
+    margin: 5px;
+    text-align: left;
+}
+
+.form-check{
+    width: 20px;
+    margin-left: 100px;
+}
+#propertyDataType, #selectedNodePropertyList, #selectedNodeMethodList{
+    padding:7px;
+}
+
+#properyManagement .col{
+    width: 400px;
+}
+#properyManagement button{
+    margin-left: -10px;
+    margin-bottom: 10px;
+}
+
+#properyManagement{
+    width: 440px;
+}
+
+.form-group, #AddMethod, #RemoveMethod{
+    margin: 10px;
+}
+#selectedNodeMethodList{
+    width: 640px;
+}
+
+.includeField button{width: 100px;
+    margin-left: 10px;
+    line-height: 20px;
+    margin-bottom: 10px;
+    margin-top: 0px;
 }

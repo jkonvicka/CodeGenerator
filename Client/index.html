@@ -6,6 +6,7 @@
       <title>Diagramr</title>
    </head>
    <body onload="">
+      <div class="rightSide">
       <button type="button" class="btn btn-primary" id="ToggleGlobal">Toggle Global Management</button>
       <button type="button" class="btn btn-primary" id="ToggleNode">Toggle Node Management</button>
       <button type="button" class="btn btn-primary" id="ToggleLinking">Toggle Linking Management</button>
@@ -36,6 +37,9 @@
                </form>
             </div>
          </div>
+      </div>
+   </div>
+   <div class="leftSide">
          <div class="row">
             <div class="col">
                <div id="diagramDiv"></div>
@@ -77,7 +81,7 @@
                         <input type="text" class="form-control text-center" id="namespaceField" value="CodeGen">
                   <div id="includeFieldsContainer">
                   </div>
-                  <button type="button" class="btn btn-primary"  onclick="addIncludeField()">Add Include</button>
+                  <button type="button" class="btn btn-success"  onclick="addIncludeField()">Add Include</button>
               </form>
             </div>
          </div>
@@ -137,6 +141,7 @@
                   </div>
                </form>
             </div>
+            <br><hr>
             <div class="col">
                <button type="button" class="btn btn-primary" id="RemoveProperty">RemoveProperty</button>
                <div class="row justify-content-center">
@@ -144,12 +149,14 @@
                   </select>
                </div>
             </div>
+            <br><hr>
             <div class="col">
                <button type="button" class="btn btn-primary" id="ShowProperties">ShowProperties</button>
             </div>
          </div>
          <div class="row" id="methodManagement">
             <div class="col">
+               <button type="button" class="btn btn-primary" id="AddMethod">Add Method</button>
                <div class="form-group">
                   <label for="methodName">Method Name:</label>
                   <input type="text" class="form-control" id="methodName" placeholder="Enter method name">
@@ -180,8 +187,8 @@
                   </div>
                   <button type="button" class="btn btn-success" onclick="addParameter()">Add Parameter</button>
                </div>
-               <button type="button" class="btn btn-primary" id="AddMethod">Add Method</button>
             </div>
+            <br><hr>
             <div class="col">
                <button type="button" class="btn btn-primary" id="RemoveMethod">RemoveMethod</button>
                <div class="row justify-content-center">
@@ -191,6 +198,7 @@
             </div>
          </div>
       </div>
+   </div>
    </body>
 </html>
 <script src="./script/includes/go-debug.js"></script>
@@ -208,11 +216,11 @@
       var nameInput = document.createElement('input');
       nameInput.type = 'text';
       nameInput.name = 'parameterName';
-      nameInput.className = 'col-4 form-control';
+      nameInput.className = 'form-control';
       nameInput.placeholder = 'Parameter name';
     
       var typeSelect = document.createElement('select');
-      typeSelect.className = 'col-4 form-control';
+      typeSelect.className = 'form-control';
       typeSelect.name = 'parameterType';
 
       var option1 = document.createElement('option');
