@@ -13,11 +13,11 @@ namespace CodeGenEngine
     {
         private Dictionary<string, string> ClassDeclaration { get; set; }
 
-        public LanguageDeclaration Declaration { get; set; }
+        public ILanguageDeclaration Declaration { get; set; }
 
         private int TabNum { get; set; } = 0;
 
-        public Language(LanguageDeclaration declaration)
+        public Language(ILanguageDeclaration declaration)
         {
             Declaration = declaration;
         }

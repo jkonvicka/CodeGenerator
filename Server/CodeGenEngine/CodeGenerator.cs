@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CodeGenEngine.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,10 @@ namespace CodeGenEngine
 {
     public class CodeGenerator
     {
-        private Language _language { get; set; }
-        public CodeGenerator(LanguageDeclaration languageDefiniton)
+        private ILanguage _language { get; set; }
+        public CodeGenerator(ILanguageDeclaration languageDeclaration)
         {
-            _language = new Language(languageDefiniton);
+            _language = new Language(languageDeclaration);
         }
 
         public string Generate(Class @class)

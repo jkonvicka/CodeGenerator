@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CodeGenEngine.Interface;
 
 namespace CodeGenEngine
 {
-    public class LanguageDeclaration
+    public class LanguageDeclaration : ILanguageDeclaration
     {
         public string IncludeTemplate { get; set; } = string.Empty;
         public string NamespaceTemplate { get; set; } = string.Empty;
