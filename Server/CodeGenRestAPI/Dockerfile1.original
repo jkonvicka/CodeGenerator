@@ -1,0 +1,25 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+WORKDIR /app
+
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /src
+COPY ["CodeGenRestAPI/CodeGenRestAPI.csproj", "CodeGenRestAPI/"]
+COPY ["CodeGenEngine/CodeGenEngine.csproj", "CodeGenEngine/"]
+COPY ["Converts/Converts.csproj", "Converts/"]
+COPY ["ExtModel/ExtModel.csproj", "ExtModel/"]
+RUN dotnet restore "CodeGenRestAPI/CodeGenRestAPI.csproj"
+COPY . .
+WORKDIR "/src/CodeGenRestAPI"
+RUN dotnet build "CodeGenRestAPI.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "CodeGenRestAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENV DOTNET_URLS=http://+:5000
+ENTRYPOINT ["dotnet", "CodeGenRestAPI.dll"]

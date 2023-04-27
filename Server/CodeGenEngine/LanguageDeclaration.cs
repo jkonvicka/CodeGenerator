@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CodeGenEngine.Interface;
 
 namespace CodeGenEngine
 {
-    public class LanguageDeclaration
+    public class LanguageDeclaration : ILanguageDeclaration
     {
         public string IncludeTemplate { get; set; } = string.Empty;
         public string NamespaceTemplate { get; set; } = string.Empty;
@@ -16,12 +17,16 @@ namespace CodeGenEngine
         public string PropertyGetterTemplate { get; set; } = string.Empty;
         public string PropertySetterTemplate { get; set; } = string.Empty;
         public string OpenDefinitonBodyTemplate { get; set; } = string.Empty;
-        public string CloseDeclarationBodyTemplate { get; set; } = string.Empty;
+        public string CloseDefinitonBodyTemplate { get; set; } = string.Empty;
         public string DefaultConstructorDeclarationTemplate { get; set; } = string.Empty;
         public string ParameterizedConstructorDeclarationTemplate { get; set; } = string.Empty;
-        public string MethodDeclarationTemplate { get; set; } = string.Empty;
+        public string PublicMethodDeclarationTemplate { get; set; } = string.Empty;
+        public string PrivateMethodDeclarationTemplate { get; set; } = string.Empty;
         public string ArgumentWithoutDefaultValueTemplate { get; set; } = string.Empty;
         public string ArgumentWithDefaultValueTemplate { get; set; } = string.Empty;
+        public string ClassTemplate { get; set; } = string.Empty;
+        public string PropertyInitializationTemplate { get; set; } = string.Empty;
+        public string FileExtensionType { get; set; } = string.Empty;
 
     }
 }

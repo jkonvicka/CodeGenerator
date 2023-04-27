@@ -1,0 +1,20 @@
+{
+   "IncludeTemplate":"import INCLUDE",
+   "NamespaceTemplate":"",
+   "ClassDeclarationWithoutBaseClassTemplate":"class CLASSNAME:",
+   "ClassDeclarationWithBaseClassTemplate":"class CLASSNAME(<BASECLASES>):",
+   "PropertyDefinititonTemplate":"",
+   "PropertyGetterTemplate":"def getNAME() -> DATATYPE:\n\t\treturn self.NAME",
+   "PropertySetterTemplate":"def setNAME(self, _NAME : DATATYPE) -> DATATYPE:\n\t\tself.NAME = _NAME\n\t\treturn",
+   "OpenDefinitonBodyTemplate":"",
+   "CloseDefinitonBodyTemplate":"",
+   "DefaultConstructorDeclarationTemplate":"",
+   "ParameterizedConstructorDeclarationTemplate":"def __init__(self, <ARGUMENTS>):",
+   "PublicMethodDeclarationTemplate":"def NAME(self, <ARGUMENTS>) -> DATATYPE:\n\t\tpass",
+   "PrivateMethodDeclarationTemplate":"def __NAME(self, <ARGUMENTS>) -> DATATYPE:\n\t\tpass",
+   "ArgumentWithoutDefaultValueTemplate":"NAME : DATATYPE",
+   "ArgumentWithDefaultValueTemplate":"NAME : DATATYPE = DEFAULTVALUE",
+   "ClassTemplate":"INCLUDES_DECLARATION\r\nCLASS_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION",
+   "PropertyInitializationTemplate":"self.NAME = NAME",
+   "FileExtensionType":"py"
+}
