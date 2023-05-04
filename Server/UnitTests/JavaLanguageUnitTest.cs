@@ -12,10 +12,11 @@ namespace UnitTests
         {
             _language = new LanguageDeclaration()
             {
-                IncludeTemplate = "import INCLUDE;",
-                ClassDeclarationWithBaseClassTemplate = "ACCESSOPERATOR class CLASSNAME extends <BASECLASES>",
+                IncludeTemplate = "using INCLUDE;",
+                NamespaceTemplate = "namespace NAMESPACE;",
+                ClassDeclarationWithBaseClassTemplate = "ACCESSOPERATOR class CLASSNAME : <BASECLASES>",
                 ClassDeclarationWithoutBaseClassTemplate = "ACCESSOPERATOR class CLASSNAME",
-                PropertyDefinititonTemplate = "ACCESSOPERATOR DATATYPE NAME;",
+                PropertyDefinititonTemplate = "ACCESSOPERATOR DATATYPE NAME { get; set; }",
                 PropertyGetterTemplate = "ACCESSOPERATOR DATATYPE getNAME() { return this.NAME; }",
                 PropertySetterTemplate = "ACCESSOPERATOR void setNAME(DATATYPE _NAME) { this.NAME = _NAME; }",
                 OpenDefinitonBodyTemplate = "{",

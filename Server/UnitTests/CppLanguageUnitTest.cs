@@ -12,9 +12,10 @@ namespace UnitTests
         {
             _language = new LanguageDeclaration()
             {
-                IncludeTemplate = "#include <INCLUDE>;",
-                ClassDeclarationWithBaseClassTemplate = "class CLASSNAME : <BASECLASES>",
+                IncludeTemplate = "#include <INCLUDE>",
+                NamespaceTemplate = "",
                 ClassDeclarationWithoutBaseClassTemplate = "class CLASSNAME",
+                ClassDeclarationWithBaseClassTemplate = "class CLASSNAME : <BASECLASES>",
                 PropertyDefinititonTemplate = "DATATYPE NAME;",
                 PropertyGetterTemplate = "DATATYPE getNAME() { return this.NAME; }",
                 PropertySetterTemplate = "void setNAME(DATATYPE _NAME) { this.NAME = _NAME; }",
@@ -27,8 +28,10 @@ namespace UnitTests
                 ArgumentWithoutDefaultValueTemplate = "DATATYPE NAME",
                 ArgumentWithDefaultValueTemplate = "DATATYPE NAME = DEFAULTVALUE",
                 ClassTemplate = "INCLUDES_DECLARATION\r\n\r\nCLASS_DECLARATION \r\n{\r\nprivate:\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\npublic:\r\nPUBLIC_PROPERTIES_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\n}",
-                PropertyInitializationTemplate = "this.NAME = NAME;"
+                PropertyInitializationTemplate = "this->NAME = NAME;",
+                FileExtensionType = "cpp"
             };
+
             _generator = new CodeGenerator(_language);
         }
 

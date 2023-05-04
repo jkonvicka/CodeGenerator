@@ -28,7 +28,8 @@ namespace UnitTests
                 ArgumentWithoutDefaultValueTemplate = "DATATYPE NAME",
                 ArgumentWithDefaultValueTemplate = "DATATYPE NAME = DEFAULTVALUE",
                 ClassTemplate = "INCLUDES_DECLARATION\r\nNAMESPACE_DECLARATION\r\nCLASS_DECLARATION\r\n{\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPUBLIC_PROPERTIES_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\n}",
-                PropertyInitializationTemplate = "this.NAME = NAME;"
+                PropertyInitializationTemplate = "this.NAME = NAME;",
+                FileExtensionType = "cs"
             };
             _generator = new CodeGenerator(_language);
         }
