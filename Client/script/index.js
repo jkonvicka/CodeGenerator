@@ -95,7 +95,7 @@ document.getElementById("ExportSVG").onclick = function(){
 
 function downloadSVGCallback(blob) {
     var url = window.URL.createObjectURL(blob);
-    var filename = "mySVGFile.svg";
+    var filename = "diagram.svg";
 
     var a = document.createElement("a");
     a.style = "display: none";
@@ -351,8 +351,6 @@ function showMessage(errorMessage, logError, type = 'alert-danger'){
     var errorContainer = document.getElementById("error-container-div");
     errorContainer.appendChild(message);
 }
-
-
 
 
 //INIT

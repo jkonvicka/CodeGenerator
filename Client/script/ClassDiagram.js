@@ -96,18 +96,20 @@ export class ClassDiagram {
         if(!importing){
             if(relationship === 'aggregation' || relationship === 'composition')
             {
-                this.addNodeProperty(from, { 
-                    name: '_' + this.getData(to).name.toLowerCase() + 'Array',
-                    type: this.getData(to).name + '[]',
-                    visibility: 'private'
-                })
+                let prop = new NodeProperty(
+                                    '_' + this.getData(to).name.toLowerCase() + 'Array', 
+                                    this.getData(to).name + '[]', 
+                                    'private', 
+                                    '');
+                this.addNodeProperty(from, prop)
             }else if(relationship === 'association')
             {
-                this.addNodeProperty(from, { 
-                    name: this.getData(to).name.toLowerCase(),
-                    type: this.getData(to).name,
-                    visibility: 'private'
-                })
+                let prop = new NodeProperty(
+                                    this.getData(to).name.toLowerCase(),
+                                    this.getData(to).name,
+                                    'private',
+                                    '');
+                this.addNodeProperty(from, prop)
             }
         }
 
