@@ -10,24 +10,25 @@ namespace UnitTests
         [SetUp]
         public void Setup()
         {
-            _language = new LanguageDeclaration()
+            _language = new LanguageDeclaration
             {
-                IncludeTemplate = "import INCLUDE",
-                ClassDeclarationWithBaseClassTemplate = "class CLASSNAME(<BASECLASES>):",
-                ClassDeclarationWithoutBaseClassTemplate = "class CLASSNAME:",
-                PropertyDefinititonTemplate = "",
-                PropertyGetterTemplate = "def getNAME() => DATAYPE:\n\t\treturn self.NAME",
-                PropertySetterTemplate = "def setNAME(self, _NAME : DATATYPE) => DATAYPE:\n\t\tself.NAME = _NAME\n\t\treturn",
-                OpenDefinitonBodyTemplate = "",
-                CloseDefinitonBodyTemplate = "",
-                DefaultConstructorDeclarationTemplate = "",
-                ParameterizedConstructorDeclarationTemplate = "def __init__(self, <ARGUMENTS>):",
-                PublicMethodDeclarationTemplate = "def NAME(self, <ARGUMENTS>) => DATAYPE:\n\t\tpass",
-                PrivateMethodDeclarationTemplate = "def __NAME(self, <ARGUMENTS>) => DATAYPE:\n\t\tpass",
-                ArgumentWithoutDefaultValueTemplate = "NAME : DATATYPE",
-                ArgumentWithDefaultValueTemplate = "NAME : DATATYPE = DEFAULTVALUE",
-                ClassTemplate = "INCLUDES_DECLARATION\r\nCLASS_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION",
-                PropertyInitializationTemplate = "self.NAME = NAME"
+                IncludeTemplate = "using INCLUDE;",
+                NamespaceTemplate = "namespace NAMESPACE\r\n{",
+                ClassDeclarationWithBaseClassTemplate = "ACCESSOPERATOR class CLASSNAME : <BASECLASES>\r\n{",
+                ClassDeclarationWithoutBaseClassTemplate = "ACCESSOPERATOR class CLASSNAME\r\n{",
+                PropertyDefinititonTemplate = "ACCESSOPERATOR DATATYPE NAME { get; set; }",
+                PropertyGetterTemplate = "ACCESSOPERATOR DATATYPE getNAME() { return this.NAME; }",
+                PropertySetterTemplate = "ACCESSOPERATOR void setNAME(DATATYPE _NAME) { this.NAME = _NAME; }",
+                OpenDefinitonBodyTemplate = "{",
+                CloseDefinitonBodyTemplate = "}",
+                DefaultConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME()\r\n{",
+                ParameterizedConstructorDeclarationTemplate = "ACCESSOPERATOR CLASSNAME(<ARGUMENTS>)\r\n{",
+                PublicMethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)\r\n{",
+                PrivateMethodDeclarationTemplate = "ACCESSOPERATOR DATATYPE NAME(<ARGUMENTS>)\r\n{",
+                ArgumentWithoutDefaultValueTemplate = "DATATYPE NAME",
+                ArgumentWithDefaultValueTemplate = "DATATYPE NAME = DEFAULTVALUE",
+                ClassTemplate = "INCLUDES_DECLARATION\r\nNAMESPACE_DECLARATION\r\nCLASS_DECLARATION\r\n{\r\nPRIVATE_PROPERTIES_DECLARATION\r\nPUBLIC_PROPERTIES_DECLARATION\r\nDEFAULT_CONSTRUCTOR_DECLARATION\r\nPARAMETRIZED_CONSTRUCTOR_DECLARATION\r\nGETTERS_AND_SETTERS_DECLARATION\r\nPUBLIC_METHODS_DECLARATION\r\nPRIVATE_METHODS_DECLARATION\r\n}",
+                PropertyInitializationTemplate = "this.NAME = NAME;"
             };
             _generator = new CodeGenerator(_language);
         }
