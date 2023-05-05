@@ -27,10 +27,13 @@ namespace CodeGenRestAPI.Controllers
         [HttpPost("GenerateClass", Name = "GenerateClass")]
         public GeneratedCodeExt GenerateClass(GenerateClassModel generateClassModel)
         {
+            _logger.LogInformation("GenerateClass called");
             LanguageDeclaration languageDeclaration = _languageDictionaryService.GetLanguage(generateClassModel.Language);
-
+            _logger.LogInformation($"Language choosen: {generateClassModel.Language}");
             CodeGenerator cg = new CodeGenerator(languageDeclaration);
+
             string generatedCode = cg.Generate(generateClassModel.ClassSpecification.ConvertToInternal());
+            _logger.LogInformation($"CodeGenerator created");
             var result = new GeneratedCodeExt()
             {
                 FileName = $"{generateClassModel.ClassSpecification.Name}.{languageDeclaration.FileExtensionType}",
@@ -47,7 +50,7 @@ namespace CodeGenRestAPI.Controllers
         public GeneratedCodeExt[] GenerateClasses(GenerateClassesModel generateClassesModel)
         {
             LanguageDeclaration languageDeclaration = _languageDictionaryService.GetLanguage(generateClassesModel.Language);
-
+            _logger.LogInformation($"Language choosen: {generateClassesModel.Language}");
             CodeGenerator cg = new CodeGenerator(languageDeclaration);
             List<GeneratedCodeExt> generatedCodeList = new List<GeneratedCodeExt>();
             foreach (var @class in generateClassesModel.ClassSpecification)

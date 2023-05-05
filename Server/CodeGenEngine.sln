@@ -5,15 +5,13 @@ VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeGenEngine", "CodeGenEngine\CodeGenEngine.csproj", "{515C92C1-D7AF-445D-9D8C-C84B8713191B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeGenClient", "CodeGenClient\CodeGenClient.csproj", "{FAC40BE0-8BC0-4707-A9A7-9433CB6E3955}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{0CFA9688-0863-41A8-9AEB-DE15BC3621C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{0CFA9688-0863-41A8-9AEB-DE15BC3621C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeGenRestAPI", "CodeGenRestAPI\CodeGenRestAPI.csproj", "{95649755-567C-46D6-B6E5-D77FAEB31743}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenRestAPI", "CodeGenRestAPI\CodeGenRestAPI.csproj", "{95649755-567C-46D6-B6E5-D77FAEB31743}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExtModel", "ExtModel\ExtModel.csproj", "{5B81F4DC-C85E-4E70-BA48-7003AB952607}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtModel", "ExtModel\ExtModel.csproj", "{5B81F4DC-C85E-4E70-BA48-7003AB952607}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converts", "Converts\Converts.csproj", "{55120581-AFB0-44EE-8795-2090B2EF8AF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Converts", "Converts\Converts.csproj", "{55120581-AFB0-44EE-8795-2090B2EF8AF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,6 @@ Global
 		{515C92C1-D7AF-445D-9D8C-C84B8713191B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{515C92C1-D7AF-445D-9D8C-C84B8713191B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{515C92C1-D7AF-445D-9D8C-C84B8713191B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FAC40BE0-8BC0-4707-A9A7-9433CB6E3955}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FAC40BE0-8BC0-4707-A9A7-9433CB6E3955}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FAC40BE0-8BC0-4707-A9A7-9433CB6E3955}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FAC40BE0-8BC0-4707-A9A7-9433CB6E3955}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0CFA9688-0863-41A8-9AEB-DE15BC3621C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0CFA9688-0863-41A8-9AEB-DE15BC3621C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CFA9688-0863-41A8-9AEB-DE15BC3621C1}.Release|Any CPU.ActiveCfg = Release|Any CPU

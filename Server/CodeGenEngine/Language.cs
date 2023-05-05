@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using CodeGenEngine.Interface;
 using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using CodeGenEngine.Interface;
 
 namespace CodeGenEngine
 {
     public class Language : IVisitor, ILanguage
     {
-        private Dictionary<string, string> ClassDeclaration { get; set; }
+        private Dictionary<string, string> ClassDeclaration { get; set; } = new Dictionary<string, string>();
 
         public ILanguageDeclaration Declaration { get; set; }
 
@@ -24,10 +18,10 @@ namespace CodeGenEngine
 
         #region Public Methods
 
-        public string GetCode(Class @class)
+        public string GetCode(Class c)
         {
             ResetTemplate();
-            @class.Accept(this);
+            c.Accept(this);
             string template = Declaration.ClassTemplate;
             foreach ((var keyword, var value) in ClassDeclaration)
             {
@@ -254,25 +248,19 @@ namespace CodeGenEngine
 
         private void AddDeclaration(string keyword, string declaration)
         {
-            if (declaration != null)
+            if (declaration != null && ClassDeclaration.TryGetValue(keyword, out string? value))
             {
-                if (ClassDeclaration.TryGetValue(keyword, out string value))
-                {
-                    ClassDeclaration[keyword] += (declaration);
-                }
+                ClassDeclaration[keyword] += (declaration);
             }
         }
 
         private void AddLine(StringBuilder sb, string declaration, bool useTab = true)
         {
-            if (string.IsNullOrEmpty(declaration))
-                return;
-            if (declaration != null)
+            if (!string.IsNullOrEmpty(declaration))
             {
                 if (useTab)
                 {
                     sb.Append(Tabs(TabNum));
-
                 }
                 sb.Append(declaration);
             }

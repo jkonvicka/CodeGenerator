@@ -11,11 +11,11 @@ namespace CodeGenEngine
 {
     public class Argument : Variable, IElement, IMapped
     {
-        public Argument(string name, DataType dataType, string defaultValue = null) : base(name, dataType, defaultValue) { }
+        public Argument(string name, DataType dataType, string defaultValue = "") : base(name, dataType, defaultValue) { }
 
         public void Accept(IVisitor visitor)
         {
-            this.Accept(visitor);
+            visitor.Visit(this);
         }
 
         public Dictionary<string, string> GetMapping()

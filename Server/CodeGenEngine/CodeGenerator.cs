@@ -22,7 +22,7 @@ namespace CodeGenEngine
         }
         public void Generate(Class @class, string @namespace, string outputPath)
         {
-
+            throw new NotImplementedException();
         }
     }
 }

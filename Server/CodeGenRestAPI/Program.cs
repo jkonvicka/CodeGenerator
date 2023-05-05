@@ -23,8 +23,6 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
-
 app.UseRouting();
 
 // Use CORS
