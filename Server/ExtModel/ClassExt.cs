@@ -8,8 +8,8 @@ namespace ExtModel
 {
     public class ClassExt
     {
-        public string Name { get; set; }
-        public string NameSpace { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string NameSpace { get; set; } = string.Empty;
         public AccessOperatorExt AccessOperator { get; set; }
         public List<IncludeExt> Includes { get; set; } = new();
         public List<BaseClassExt> BaseClasses { get; set; } = new();

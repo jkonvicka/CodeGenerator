@@ -2,6 +2,6 @@
 {
     public class BaseClassExt
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
     }
 }

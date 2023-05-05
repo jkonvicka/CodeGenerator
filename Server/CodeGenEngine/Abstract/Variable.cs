@@ -11,7 +11,7 @@ namespace CodeGenEngine.Abstract
         public string Name { get; set; }
         public DataType DataType { get; set; }
         public string DefaultValue { get; set; }
-        public Variable(string name, DataType dataType, string defaultValue)
+        protected Variable(string name, DataType dataType, string defaultValue)
         {
             Name = name;
             DataType = dataType;

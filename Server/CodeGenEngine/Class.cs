@@ -9,8 +9,8 @@ namespace CodeGenEngine
 {
     public class Class : IElement, IMapped
     {
-        public string Name { get; set; }
-        public string NameSpace {get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string NameSpace {get; set; } = string.Empty;
         public AccessOperator AccessOperator { get; set; }
         public List<Include> Includes {get; set;} = new();
         public List<BaseClass> BaseClasses { get; set;} = new();

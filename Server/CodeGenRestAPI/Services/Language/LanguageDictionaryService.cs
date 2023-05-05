@@ -17,8 +17,11 @@ namespace CodeGenRestAPI.Services.Language
             foreach (string filePath in fileEntries)
             {
                 string json = File.ReadAllText(filePath);
-                LanguageDeclaration obj = JsonConvert.DeserializeObject<LanguageDeclaration>(json);
-                _languageDictionary.Add(Path.GetFileNameWithoutExtension(filePath), obj);
+                LanguageDeclaration? obj = JsonConvert.DeserializeObject<LanguageDeclaration>(json);
+                if (obj != null)
+                {
+                    _languageDictionary.Add(Path.GetFileNameWithoutExtension(filePath), obj);
+                }
             }
         }
 

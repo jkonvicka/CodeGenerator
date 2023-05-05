@@ -2,6 +2,6 @@
 {
     public class DataTypeExt
     {
-        public string Key { get; set; }
+        public string Key { get; set; } = string.Empty;
     }
 }

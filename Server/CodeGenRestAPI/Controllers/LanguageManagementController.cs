@@ -20,6 +20,7 @@ namespace CodeGenRestAPI.Controllers
             _logger = logger;
             _languageDictionaryService = languageDictionaryService;
         }
+
         /// <summary>
         /// Get supported languages 
         /// </summary>
@@ -27,6 +28,7 @@ namespace CodeGenRestAPI.Controllers
         [HttpGet("GetLanguages", Name = "GetLanguages")]
         public string[] GetLanguages()
         {
+            _logger.LogInformation("GetLanguages called");
             return _languageDictionaryService.GetAllKeys();
         }
     }
