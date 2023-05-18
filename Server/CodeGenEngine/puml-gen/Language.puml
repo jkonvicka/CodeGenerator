@@ -1,0 +1,28 @@
+@startuml
+class Language {
+    - TabNum : int <<get>> <<set>> = 0
+    + Language(declaration:ILanguageDeclaration)
+    + GetCode(c:Class) : string
+    + Visit(element:IElement) : void
+    + AddNamespace(c:Class) : void
+    + AddClassDeclaration(c:Class) : void
+    + AddConstructor(c:Class) : void
+    + AddPropertyDeclaration(property:Property) : void
+    + AddGettersAndSetters(c:Class) : void
+    + AddMethodDeclaration(method:Method) : void
+    + AddIncludeDeclaration(include:Include) : void
+    - UseTemplate(mapped:IMapped, template:string) : string
+    - MapArguments(arguments:List<string>, template:string) : string
+    - AddDeclaration(keyword:string, declaration:string) : void
+    - AddLine(sb:StringBuilder, declaration:string, useTab:bool) : void
+    - AddNewLine(sb:StringBuilder) : void
+    - ResetTemplate() : void
+    {static} - Tabs(n:int) : string
+}
+class "Dictionary`2"<T1,T2> {
+}
+IVisitor <|-- Language
+ILanguage <|-- Language
+Language o-> "ClassDeclaration<string,string>" "Dictionary`2"
+Language --> "Declaration" ILanguageDeclaration
+@enduml

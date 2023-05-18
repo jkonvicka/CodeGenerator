@@ -1,0 +1,5 @@
+@startuml
+interface IMapped {
+    GetMapping() : Dictionary<string, string>
+}
+@enduml

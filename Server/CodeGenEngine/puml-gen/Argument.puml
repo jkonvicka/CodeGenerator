@@ -1,0 +1,10 @@
+@startuml
+class Argument {
+    + Argument(name:string, dataType:DataType, defaultValue:string)
+    + Accept(visitor:IVisitor) : void
+    + GetMapping() : Dictionary<string, string>
+}
+Variable <|-- Argument
+IElement <|-- Argument
+IMapped <|-- Argument
+@enduml

@@ -1,0 +1,17 @@
+@startuml
+class Class {
+    + Name : string <<get>> <<set>>
+    + NameSpace : string <<get>> <<set>>
+    + Accept(visitor:IVisitor) : void
+    + GetMapping() : Dictionary<string, string>
+}
+class "List`1"<T> {
+}
+IElement <|-- Class
+IMapped <|-- Class
+Class --> "AccessOperator" AccessOperator
+Class o-> "Includes<Include>" "List`1"
+Class o-> "BaseClasses<BaseClass>" "List`1"
+Class o-> "Properties<Property>" "List`1"
+Class o-> "Methods<Method>" "List`1"
+@enduml

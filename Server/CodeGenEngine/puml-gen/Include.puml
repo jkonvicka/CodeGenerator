@@ -1,0 +1,167 @@
+@startuml
+enum AccessOperator {
+    PRIVATE,
+    PUBLIC,
+    PROTECTED,
+}
+class Argument {
+    + Argument(name:string, dataType:DataType, defaultValue:string)
+    + Accept(visitor:IVisitor) : void
+    + GetMapping() : Dictionary<string, string>
+}
+Variable <|-- Argument
+IElement <|-- Argument
+IMapped <|-- Argument
+class BaseClass {
+    + Name : string <<get>> <<set>>
+    + BaseClass(name:string)
+    + Accept(visitor:IVisitor) : void
+}
+IElement <|-- BaseClass
+class Class {
+    + Name : string <<get>> <<set>>
+    + NameSpace : string <<get>> <<set>>
+    + Accept(visitor:IVisitor) : void
+    + GetMapping() : Dictionary<string, string>
+}
+class "List`1"<T> {
+}
+IElement <|-- Class
+IMapped <|-- Class
+Class --> "AccessOperator" AccessOperator
+Class o-> "Includes<Include>" "List`1"
+Class o-> "BaseClasses<BaseClass>" "List`1"
+Class o-> "Properties<Property>" "List`1"
+Class o-> "Methods<Method>" "List`1"
+class CodeGenerator {
+    + CodeGenerator(languageDeclaration:ILanguageDeclaration)
+    + Generate(@class:Class) : string
+    + Generate(@class:Class, @namespace:string, outputPath:string) : void
+}
+CodeGenerator --> "_language" ILanguage
+class DataType {
+    + Key : string <<get>> <<set>>
+    + DataType(key:string)
+}
+class Include {
+    + Name : string <<get>> <<set>>
+    + Include(name:string)
+    + Accept(visitor:IVisitor) : void
+    + GetMapping() : Dictionary<string, string>
+}
+IElement <|-- Include
+IMapped <|-- Include
+class Language {
+    - TabNum : int <<get>> <<set>> = 0
+    + Language(declaration:ILanguageDeclaration)
+    + GetCode(c:Class) : string
+    + Visit(element:IElement) : void
+    + AddNamespace(c:Class) : void
+    + AddClassDeclaration(c:Class) : void
+    + AddConstructor(c:Class) : void
+    + AddPropertyDeclaration(property:Property) : void
+    + AddGettersAndSetters(c:Class) : void
+    + AddMethodDeclaration(method:Method) : void
+    + AddIncludeDeclaration(include:Include) : void
+    - UseTemplate(mapped:IMapped, template:string) : string
+    - MapArguments(arguments:List<string>, template:string) : string
+    - AddDeclaration(keyword:string, declaration:string) : void
+    - AddLine(sb:StringBuilder, declaration:string, useTab:bool) : void
+    - AddNewLine(sb:StringBuilder) : void
+    - ResetTemplate() : void
+    {static} - Tabs(n:int) : string
+}
+class "Dictionary`2"<T1,T2> {
+}
+IVisitor <|-- Language
+ILanguage <|-- Language
+Language o-> "ClassDeclaration<string,string>" "Dictionary`2"
+Language --> "Declaration" ILanguageDeclaration
+class LanguageDeclaration {
+    + IncludeTemplate : string <<get>> <<set>>
+    + NamespaceTemplate : string <<get>> <<set>>
+    + ClassDeclarationWithoutBaseClassTemplate : string <<get>> <<set>>
+    + ClassDeclarationWithBaseClassTemplate : string <<get>> <<set>>
+    + PropertyDefinititonTemplate : string <<get>> <<set>>
+    + PropertyGetterTemplate : string <<get>> <<set>>
+    + PropertySetterTemplate : string <<get>> <<set>>
+    + OpenDefinitonBodyTemplate : string <<get>> <<set>>
+    + CloseDefinitonBodyTemplate : string <<get>> <<set>>
+    + DefaultConstructorDeclarationTemplate : string <<get>> <<set>>
+    + ParameterizedConstructorDeclarationTemplate : string <<get>> <<set>>
+    + PublicMethodDeclarationTemplate : string <<get>> <<set>>
+    + PrivateMethodDeclarationTemplate : string <<get>> <<set>>
+    + ArgumentWithoutDefaultValueTemplate : string <<get>> <<set>>
+    + ArgumentWithDefaultValueTemplate : string <<get>> <<set>>
+    + ClassTemplate : string <<get>> <<set>>
+    + PropertyInitializationTemplate : string <<get>> <<set>>
+    + FileExtensionType : string <<get>> <<set>>
+}
+ILanguageDeclaration <|-- LanguageDeclaration
+class Method {
+    + Name : string <<get>> <<set>>
+    + Method(accessOperator:AccessOperator, name:string, returnType:DataType, arguments:List<Argument>)
+    + Accept(visitor:IVisitor) : void
+    + GetMapping() : Dictionary<string, string>
+}
+class "List`1"<T> {
+}
+IElement <|-- Method
+IMapped <|-- Method
+Method --> "ReturnType" DataType
+Method --> "AccessOperator" AccessOperator
+Method --> "Arguments<Argument>" "List`1"
+class Property {
+    + Property(accessOperator:AccessOperator, generateGetter:bool, generateSetter:bool, name:string, dataType:DataType, defaultValue:string)
+    + GenerateGetter : bool <<get>> <<set>>
+    + GenerateSetter : bool <<get>> <<set>>
+    + Accept(visitor:IVisitor) : void
+    + GetMapping() : Dictionary<string, string>
+}
+Variable <|-- Property
+IElement <|-- Property
+IMapped <|-- Property
+Property --> "AccessOperator" AccessOperator
+abstract class Variable {
+    + Name : string <<get>> <<set>>
+    + DefaultValue : string <<get>> <<set>>
+    # Variable(name:string, dataType:DataType, defaultValue:string)
+}
+Variable --> "DataType" DataType
+interface IElement {
+    + Accept(visitor:IVisitor) : void
+}
+interface ILanguage {
+    GetCode(c:Class) : string
+    AddNamespace(c:Class) : void
+    AddGettersAndSetters(c:Class) : void
+    AddConstructor(c:Class) : void
+    AddClassDeclaration(c:Class) : void
+}
+interface ILanguageDeclaration {
+    ArgumentWithDefaultValueTemplate : string <<get>> <<set>>
+    ArgumentWithoutDefaultValueTemplate : string <<get>> <<set>>
+    ClassDeclarationWithBaseClassTemplate : string <<get>> <<set>>
+    ClassDeclarationWithoutBaseClassTemplate : string <<get>> <<set>>
+    ClassTemplate : string <<get>> <<set>>
+    CloseDefinitonBodyTemplate : string <<get>> <<set>>
+    DefaultConstructorDeclarationTemplate : string <<get>> <<set>>
+    FileExtensionType : string <<get>> <<set>>
+    IncludeTemplate : string <<get>> <<set>>
+    NamespaceTemplate : string <<get>> <<set>>
+    OpenDefinitonBodyTemplate : string <<get>> <<set>>
+    ParameterizedConstructorDeclarationTemplate : string <<get>> <<set>>
+    PrivateMethodDeclarationTemplate : string <<get>> <<set>>
+    PropertyDefinititonTemplate : string <<get>> <<set>>
+    PropertyGetterTemplate : string <<get>> <<set>>
+    PropertyInitializationTemplate : string <<get>> <<set>>
+    PropertySetterTemplate : string <<get>> <<set>>
+    PublicMethodDeclarationTemplate : string <<get>> <<set>>
+}
+interface IMapped {
+    GetMapping() : Dictionary<string, string>
+}
+interface IVisitor {
+    Visit(element:IElement) : void
+}
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class BaseClass {
+    + Name : string <<get>> <<set>>
+    + BaseClass(name:string)
+    + Accept(visitor:IVisitor) : void
+}
+IElement <|-- BaseClass
+@enduml

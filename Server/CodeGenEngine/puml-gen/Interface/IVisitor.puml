@@ -1,0 +1,5 @@
+@startuml
+interface IVisitor {
+    Visit(element:IElement) : void
+}
+@enduml
