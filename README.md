@@ -17,4 +17,3 @@ Using Docker-compose, you can easily manage the deployment of your project and e
 ## Docs
 * Project documentation [CZ]: [/doc/SemestralProject_CodeGen_kon0379.pdf](./doc/SemestralProject_CodeGen_kon0379.pdf)
 * Class diagram [SVG]: [/doc/diagrams/CodeGenClassDiagram.svg](./doc/diagrams/CodeGenClassDiagram.svg)
-* Class diagram [PNG]: [/doc/diagrams/CodeGenClassDiagram.png](./doc/diagrams/CodeGenClassDiagram.png)
