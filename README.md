@@ -13,3 +13,8 @@ To deploy the system, you will need Docker installed on your machine. You can si
 - **Swagger Documentation:** `http://localhost:5000/swagger/index.html`
 
 Using Docker-compose, you can easily manage the deployment of your project and ensure that all the necessary components are running smoothly together. This allows you to conveniently access the client application, server, and API documentation in your local environment for testing and development purposes.
+
+## Docs
+* Project documentation [CZ]: [/doc/SemestralProject_CodeGen_kon0379.pdf](./doc/SemestralProject_CodeGen_kon0379.pdf)
+* Class diagram [SVG]: [/doc/diagrams/CodeGenClassDiagram.svg](./doc/diagrams/CodeGenClassDiagram.svg)
+* Class diagram [PNG]: [/doc/diagrams/CodeGenClassDiagram.png](./doc/diagrams/CodeGenClassDiagram.png)
