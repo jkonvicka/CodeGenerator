@@ -1,0 +1,22 @@
+@startuml
+interface ILanguageDeclaration {
+    ArgumentWithDefaultValueTemplate : string <<get>> <<set>>
+    ArgumentWithoutDefaultValueTemplate : string <<get>> <<set>>
+    ClassDeclarationWithBaseClassTemplate : string <<get>> <<set>>
+    ClassDeclarationWithoutBaseClassTemplate : string <<get>> <<set>>
+    ClassTemplate : string <<get>> <<set>>
+    CloseDefinitonBodyTemplate : string <<get>> <<set>>
+    DefaultConstructorDeclarationTemplate : string <<get>> <<set>>
+    FileExtensionType : string <<get>> <<set>>
+    IncludeTemplate : string <<get>> <<set>>
+    NamespaceTemplate : string <<get>> <<set>>
+    OpenDefinitonBodyTemplate : string <<get>> <<set>>
+    ParameterizedConstructorDeclarationTemplate : string <<get>> <<set>>
+    PrivateMethodDeclarationTemplate : string <<get>> <<set>>
+    PropertyDefinititonTemplate : string <<get>> <<set>>
+    PropertyGetterTemplate : string <<get>> <<set>>
+    PropertyInitializationTemplate : string <<get>> <<set>>
+    PropertySetterTemplate : string <<get>> <<set>>
+    PublicMethodDeclarationTemplate : string <<get>> <<set>>
+}
+@enduml

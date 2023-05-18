@@ -1,0 +1,15 @@
+@startuml
+class Method {
+    + Name : string <<get>> <<set>>
+    + Method(accessOperator:AccessOperator, name:string, returnType:DataType, arguments:List<Argument>)
+    + Accept(visitor:IVisitor) : void
+    + GetMapping() : Dictionary<string, string>
+}
+class "List`1"<T> {
+}
+IElement <|-- Method
+IMapped <|-- Method
+Method --> "ReturnType" DataType
+Method --> "AccessOperator" AccessOperator
+Method --> "Arguments<Argument>" "List`1"
+@enduml

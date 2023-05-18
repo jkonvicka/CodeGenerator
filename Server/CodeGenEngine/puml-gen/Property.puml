@@ -1,0 +1,13 @@
+@startuml
+class Property {
+    + Property(accessOperator:AccessOperator, generateGetter:bool, generateSetter:bool, name:string, dataType:DataType, defaultValue:string)
+    + GenerateGetter : bool <<get>> <<set>>
+    + GenerateSetter : bool <<get>> <<set>>
+    + Accept(visitor:IVisitor) : void
+    + GetMapping() : Dictionary<string, string>
+}
+Variable <|-- Property
+IElement <|-- Property
+IMapped <|-- Property
+Property --> "AccessOperator" AccessOperator
+@enduml

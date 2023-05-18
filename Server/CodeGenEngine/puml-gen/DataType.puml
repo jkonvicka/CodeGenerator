@@ -1,0 +1,6 @@
+@startuml
+class DataType {
+    + Key : string <<get>> <<set>>
+    + DataType(key:string)
+}
+@enduml

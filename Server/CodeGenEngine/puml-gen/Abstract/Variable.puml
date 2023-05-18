@@ -1,0 +1,8 @@
+@startuml
+abstract class Variable {
+    + Name : string <<get>> <<set>>
+    + DefaultValue : string <<get>> <<set>>
+    # Variable(name:string, dataType:DataType, defaultValue:string)
+}
+Variable --> "DataType" DataType
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class CodeGenerator {
+    + CodeGenerator(languageDeclaration:ILanguageDeclaration)
+    + Generate(@class:Class) : string
+    + Generate(@class:Class, @namespace:string, outputPath:string) : void
+}
+CodeGenerator --> "_language" ILanguage
+@enduml

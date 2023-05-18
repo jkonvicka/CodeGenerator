@@ -1,0 +1,9 @@
+@startuml
+interface ILanguage {
+    GetCode(c:Class) : string
+    AddNamespace(c:Class) : void
+    AddGettersAndSetters(c:Class) : void
+    AddConstructor(c:Class) : void
+    AddClassDeclaration(c:Class) : void
+}
+@enduml

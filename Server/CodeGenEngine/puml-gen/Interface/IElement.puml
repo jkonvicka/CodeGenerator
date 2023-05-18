@@ -1,0 +1,5 @@
+@startuml
+interface IElement {
+    + Accept(visitor:IVisitor) : void
+}
+@enduml
